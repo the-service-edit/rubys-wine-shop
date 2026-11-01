@@ -403,5 +403,61 @@ Unsubscribe anytime.
 <script>
 document.querySelectorAll('iframe').forEach(function(f){f.addEventListener('load',function(){try{var d=f.contentDocument;var n=d.querySelector('.mock-note');if(n)n.style.display='none';}catch(e){}});});
 </script>
+<script>
+/* TSE TRACKING (do not remove or edit). Logs visits, time on page, emails scrolled, clicks inside mockups and reaching the offer, keyed to ?r=<token>.
+   Never fires: without a token, for ?qa=1, in automated browsers, or once Mel has visited any showcase with ?me=1 (cookie on .theserviceedit.com). */
+(function(){
+  var EP='https://rxwjactnfsrakpagbiit.supabase.co/functions/v1/track/e';
+  try{
+    var q=new URLSearchParams(location.search);
+    if(q.get('me')==='1'){document.cookie='tse_me=1; domain=.theserviceedit.com; path=/; max-age=315360000; secure; samesite=lax';}
+    if(/(^|;\s*)tse_me=1/.test(document.cookie)||q.get('qa')==='1'||navigator.webdriver)return;
+    var t=(q.get('r')||sessionStorage.getItem('tse_r')||'').toLowerCase();
+    if(!/^[a-z0-9]{6,16}$/.test(t))return;
+    sessionStorage.setItem('tse_r',t);
+    var s=sessionStorage.getItem('tse_s');
+    if(!s){s=Math.random().toString(36).slice(2,12)+Date.now().toString(36);sessionStorage.setItem('tse_s',s);}
+  }catch(e){return;}
+  var sent={};
+  function send(e,d,once){
+    var key=e+'|'+(d||'');
+    if(once&&sent[key])return; sent[key]=1;
+    var body=JSON.stringify({t:t,e:e,d:String(d||''),s:s});
+    try{if(navigator.sendBeacon&&navigator.sendBeacon(EP,body))return;}catch(x){}
+    try{fetch(EP,{method:'POST',body:body,mode:'no-cors',keepalive:true});}catch(x){}
+  }
+  send('view','',true);
+  var secs=0,marks=[15,30,60,120,300,600];
+  setInterval(function(){
+    if(document.visibilityState!=='visible')return;
+    secs++;
+    if(marks.indexOf(secs)>-1)send('engaged',secs,true);
+  },1000);
+  function kicker(f){var c=f.closest('.card');var k=c&&c.querySelector('.k');return k?k.textContent.trim():((f.getAttribute('title')||'email').replace(/ email for .*$/i,''));}
+  function wire(f){
+    var d,w;try{d=f.contentDocument;w=f.contentWindow;}catch(x){return;}
+    if(!d||!d.body||d.__tse||d.URL==='about:blank')return;
+    d.__tse=1;
+    var k=kicker(f);
+    d.addEventListener('click',function(ev){
+      var a=ev.target&&ev.target.closest?ev.target.closest('a[href]'):null;
+      if(a)send('cta',k+'|'+a.getAttribute('href'));
+    },true);
+    w.addEventListener('scroll',function(){
+      var h=d.documentElement.scrollHeight||d.body.scrollHeight;
+      if((w.scrollY+w.innerHeight)>=h*0.7)send('email_read',k,true);
+    },{passive:true});
+  }
+  document.querySelectorAll('iframe').forEach(function(f){
+    f.addEventListener('load',function(){wire(f);});
+    try{if(f.contentDocument&&f.contentDocument.readyState==='complete')wire(f);}catch(x){}
+  });
+  var offer=document.querySelector('.close h3');
+  if(offer&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){send('offer','',true);io.disconnect();}});},{threshold:0.6});
+    io.observe(offer);
+  }
+})();
+</script>
 </body>
 </html>
