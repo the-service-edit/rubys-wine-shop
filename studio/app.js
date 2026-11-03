@@ -5,7 +5,7 @@
   var R = window.RS;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
-  var LS = 'rubys-studio-v4';
+  var LS = 'rubys-studio-v5';
 
   var P = {
     undo: '<path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>', redo: '<path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/>',
@@ -517,7 +517,7 @@
 
   /* ---------- start ---------- */
   st.store = load();
-  if (!st.store) { st.store = { emails: [], cur: null }; ['weekly', 'gift'].forEach(function (k) { var L = R.LAYOUTS[k]; st.store.emails.push({ id: newId(), kind: L.n, updated: Date.now() - (k === 'gift' ? 60000 : 0), doc: L.f() }); }); st.store.cur = st.store.emails[0].id; }
+  if (!st.store) { st.store = { emails: [], cur: null }; ['weekly', 'quiz', 'gift', 'shelf', 'night'].forEach(function (k, i) { var L = R.LAYOUTS[k]; st.store.emails.push({ id: newId(), kind: L.n, updated: Date.now() - i * 60000, doc: L.f() }); }); st.store.cur = st.store.emails[0].id; }
   if (!cur()) st.store.cur = st.store.emails[0].id;
   st.doc = cur().doc; bar(); drawList(); setMode('browse');
   window.__studio = { get doc() { return st.doc; }, exportHTML: exportHTML, store: function () { return st.store; }, setMode: setMode };

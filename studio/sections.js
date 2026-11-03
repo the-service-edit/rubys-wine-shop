@@ -118,34 +118,47 @@ function renderEmail(doc,mode){
  +'</table>\n</td></tr></table>\n'+(E?'':'{{ open_tracking_block }}\n')+'</body>\n</html>';
 }
 
-/* Starting layouts. Empty fields show a hint in the editor and disappear from the sent email. */
+/* Five starting templates. Real Ruby's facts only; grey hints mark what Tamara fills in each time. */
 var LAYOUTS={
- weekly:{n:'Ruby\'s Weekly',desc:'Pours by the glass, what\'s on, and something from the shelf.',f:function(){return {subject:'This week at Ruby\'s',pre:'What\'s open by the glass and what\'s on this week.',eyebrow:'Ruby\'s Weekly',sections:[
-  make('photoHead',{title:'This week at Ruby\'s',kicker:'',body:''}),
-  make('lineup',{items:[{name:'Our house-made Pet Nat',note:'',price:''},{name:'',note:'',price:''},{name:'',note:'',price:''}],btn:'Come in for a glass'}),
-  make('event',{body:'Hosted by The Weekly Fifty crew. Spots go fast.'}),
-  make('story',{img:CDN+'RubysAperoApril_0118.jpg',kicker:'On the shelf',title:'New this week'}),
-  make('signoff')]};}},
- quiz:{n:'Quiz early access',desc:'Subscribers get the booking link 48 hours before Instagram.',f:function(){return {subject:'Quiz night: you get first dibs',pre:'Bookings open to subscribers 48 hours before Instagram.',eyebrow:'Subscribers first',sections:[
-  make('photoHead',{img:CDN+'Pub_Quiz_Night.png',shape:'square',img_alt:'Ruby\'s quiz night poster',img_link:SITE+'/pages/whats-on',kicker:'Quiz night with The Weekly Fifty',title:'Bookings are open. For you, first.',body:'You\'re on the list, so you get the booking link 48 hours before it goes on Instagram.',btn:'Book your team in',link:SITE+'/pages/whats-on'}),
-  make('date',{label:'Next quiz',big:'',body:'',bg:'wine'}),
-  make('text',{body:'Missed out? Join the waitlist on our What\'s on page and we\'ll email you if a table opens up.'}),
+ weekly:{n:'Ruby\'s Weekly',desc:'Your Friday email: pours by the glass, what\'s on, and a bottle from the shelf.',f:function(){return {subject:'This week at Ruby\'s',pre:'What\'s open by the glass, and what\'s on this week.',eyebrow:'Ruby\'s Weekly',sections:[
+  make('photoHead',{img:CDN+'4x3_MikaylaADAMS_RubysWineShop_8.jpg',shape:'wide',img_alt:'A busy night at the bar at Ruby\'s',img_link:SITE+'/pages/find-us',kicker:'',title:'This week at Ruby\'s',body:''}),
+  make('lineup',{kicker:'By the glass',title:'Open this week',items:[{name:'Our house-made Pet Nat',note:'',price:''},{name:'',note:'',price:''},{name:'',note:'',price:''}],btn:'Come in for a glass',link:SITE+'/pages/find-us'}),
+  make('event',{bg:'wine',kicker:'What\'s on',title:'Quiz night with The Weekly Fifty',when:'Every second Wednesday of the month',body:'Hosted by The Weekly Fifty crew. Spots go fast, so book early.',btn:'See what\'s on',link:SITE+'/pages/whats-on'}),
+  make('story',{bg:'sand',img:CDN+'RubysAperoApril_0118.jpg',img_alt:'A bottle to take home from Ruby\'s',kicker:'On the shelf',title:'',body:'',btn:'',link:SITE+'/pages/find-us'}),
+  make('signoff',{line:'See you at the bar.'})]};}},
+
+ quiz:{n:'Quiz night: subscribers first',desc:'Send this 48 hours before the booking link goes on Instagram.',f:function(){return {subject:'Quiz night: you get first dibs',pre:'Subscribers get the booking link 48 hours before Instagram.',eyebrow:'Subscribers first',sections:[
+  make('hero',{img:CDN+'Pub_Quiz_Night.png',shape:'original',img_alt:'Ruby\'s quiz night with The Weekly Fifty',img_link:SITE+'/pages/whats-on'}),
+  make('letter',{bg:'terra',align:'center',kicker:'Ruby\'s quiz night',title:'Bookings are open. For you, first.',body:'You\'re on the list, so you get the link 48 hours before it goes on Instagram.',btn:'Book your team in',link:SITE+'/pages/whats-on'}),
+  make('date',{bg:'wine',label:'Next quiz',big:'',body:'Hosted by The Weekly Fifty crew, every second Wednesday of the month.',btn:'',link:SITE+'/pages/whats-on'}),
+  make('text',{bg:'cream',title:'Missed out?',body:'Join the waitlist on our What\'s on page and we\'ll email you if a table opens up. There are walk-in spots outside too, and if we can squeeze you in on the night, we will.',btn:'Join the waitlist',link:SITE+'/pages/whats-on'}),
   make('signoff',{line:'Sharpen your pencils.'})]};}},
- event:{n:'Event or news',desc:'One thing happening, with the details and a button.',f:function(){return {subject:'',pre:'',eyebrow:'Wine shop · Albion · Brisbane',sections:[
-  make('eventPhoto',{img:CDN+'MikaylaADAMS_RubysWineShop_7.jpg',kicker:'Save the date'}),
-  make('visit'),make('signoff')]};}},
- gift:{n:'Christmas gift boxes',desc:'Your three boxes, prices and cut-offs.',f:function(){return {subject:'Three boxes, hand-picked',pre:'Ruby Custom orders close Sunday 6 December.',eyebrow:'Christmas at Ruby\'s',sections:[
+
+ gift:{n:'Christmas gift boxes',desc:'Your three boxes with prices, order cut-offs and delivery.',f:function(){return {subject:'Three boxes, hand-picked',pre:'Ruby Custom orders close Sunday 6 December.',eyebrow:'Christmas at Ruby\'s',sections:[
   make('hero',{img:CDN+'gift-boxes-banner-v2.jpg',shape:'original',img_alt:'Ruby\'s Christmas gift boxes',img_link:SITE+'/pages/gift-boxes'}),
-  make('letter',{title:'Hand-picked by us, not an algorithm.',body:'Three bottles in every box from the independent winemakers we pour all year, with tasting cards, beautifully packaged and ready to give.'}),
-  make('lineup',{kicker:'Christmas 2026',title:'Pick the box that suits them',items:[{name:'Introduction Collection',note:'A sparkling, a white and a red. Fun and easy drinking.',price:'$160'},{name:'Explorer\'s Collection',note:'Three standout bottles you won\'t find in an average bottle shop.',price:'$260'},{name:'The Ruby Custom',note:'Three premium bottles, fully bespoke to the person.',price:'From $380'}],btn:'Choose your box',link:SITE+'/pages/gift-boxes'}),
-  make('date',{label:'Ruby Custom orders close',big:'Sun 6 Dec',body:'Explorer\'s and Introduction close Sunday 13 December. Pickup or Brisbane delivery from Wednesday 2 December.',btn:'Request a custom box',link:SITE+'/pages/gift-boxes'}),
-  make('text',{body:'Free pickup in Albion, or $15 delivery across Brisbane metro. Only available to adults 18+.'}),
+  make('letter',{bg:'cream',kicker:'',title:'Hand-picked by us, not an algorithm.',body:'Three bottles in every box from the independent winemakers we pour all year, with tasting cards, beautifully packaged and ready to give.'}),
+  make('lineup',{bg:'sand',kicker:'Christmas 2026',title:'Pick the box that suits them',items:[{name:'Introduction Collection',note:'A sparkling, a white and a red. Fun and easy drinking.',price:'$160'},{name:'Explorer\'s Collection',note:'Three standout bottles you won\'t find in an average bottle shop, with a personal note.',price:'$260'},{name:'The Ruby Custom',note:'Three premium bottles, fully bespoke. Tell us about them and we\'ll build it.',price:'From $380'}],btn:'Choose your box',link:SITE+'/pages/gift-boxes'}),
+  make('date',{bg:'wine',label:'Ruby Custom orders close',big:'Sun 6 Dec',body:'Explorer\'s and Introduction close Sunday 13 December. Pickup or Brisbane delivery from Wednesday 2 December.',btn:'Request a custom box',link:SITE+'/pages/gift-boxes'}),
+  make('visit',{bg:'cream',title:'Getting it to them',body:'Free pickup from Ruby\'s in Albion, or $15 local delivery across Brisbane metro. Free delivery on orders over $800 (minimum 5 boxes). Only available to adults 18+.',btn:'',link:SITE+'/pages/gift-boxes'}),
+  make('cheers'),
   make('signoff',{line:'Cheers to the season.'})]};}},
- lastorders:{n:'Last orders',desc:'A short countdown before a cut-off.',f:function(){return {subject:'Last orders for Christmas boxes',pre:'Explorer\'s and Introduction close Sunday.',eyebrow:'Christmas at Ruby\'s',sections:[
-  make('date',{label:'Gift boxes close',big:'Sun 13 Dec',body:'Order by Sunday and we\'ll have yours packed with tasting cards, ready for pickup or Brisbane delivery.',btn:'Choose your box',link:SITE+'/pages/gift-boxes'}),
-  make('lineup',{kicker:'Two left to order',title:'Three bottles in each',items:[{name:'Introduction Collection',note:'A sparkling, a white and a red.',price:'$160'},{name:'Explorer\'s Collection',note:'Bottles you won\'t find in an average bottle shop, plus a personal note.',price:'$260'}]}),
-  make('letter',{bg:'sand',title:'Missed the cut-off?',body:'A Ruby\'s gift card works for take-away bottles and drinks in-store. We email it straight to them, and it never expires.',btn:'Buy a gift card',link:SITE+'/pages/gift-cards'}),
-  make('signoff')]};}},
+
+ shelf:{n:'On the shelf',desc:'Bottles to take home: new arrivals and what you\'re loving.',f:function(){return {subject:'New on the shelf at Ruby\'s',pre:'A few bottles worth taking home this week.',eyebrow:'On the shelf',sections:[
+  make('photoHead',{bg:'wine',img:CDN+'RubysAperoApril_0118.jpg',shape:'square',img_alt:'A bottle to take home from Ruby\'s',img_link:SITE+'/pages/find-us',kicker:'Take one home',title:'New on the shelf',body:'Our shelf is always growing, with unique and classic wines from all over the world. Here\'s what\'s just landed.'}),
+  make('lineup',{bg:'cream',kicker:'Just landed',title:'Three to take home',items:[{name:'',note:'',price:''},{name:'',note:'',price:''},{name:'',note:'',price:''}],btn:'',link:SITE+'/pages/find-us'}),
+  make('quote',{bg:'terra',quote:'We care about community and where the wine has come from.',by:'Minimal intervention, independent winemakers'}),
+  make('text',{bg:'sand',title:'Always on the shelf',body:'Hard-to-find drops from Switzerland, skin-contact Georgian beauties, and a great selection from our own backyard in QLD. Plus a growing vermouth selection by the glass.',btn:'Come and browse',link:SITE+'/pages/find-us'}),
+  make('photoPair',{bg:'sand',a:CDN+'RubysAperoApril_012.jpg',a_alt:'A Ruby\'s snack board with a glass of red',b:CDN+'MikaylaADAMS_RubysWineShop_7.jpg',b_alt:'Ruby\'s Wine Shop at dusk',caption:'Open it here with a board, or take it home.'}),
+  make('signoff',{line:'See you at the shelf.'})]};}},
+
+ night:{n:'Make a night of it',desc:'Snacks, dinner to your seat from Olive Thyme, and your hours.',f:function(){return {subject:'Make a night of it at Ruby\'s',pre:'Wine, a DIY board, and dinner delivered to your seat.',eyebrow:'Wine shop · Albion · Brisbane',sections:[
+  make('hero',{img:CDN+'RubysAperoApril_012.jpg',shape:'wide',img_alt:'A Ruby\'s snack board with olives, cheese and charcuterie beside a glass of red',img_link:SITE+'/pages/about'}),
+  make('letter',{bg:'sand',align:'center',kicker:'Spontaneous evenings',title:'Make a night of it.',body:'Grab a seat, indoors or out, pick from 8 to 10 rotating pours, and let the evening unfold however it wants to.',btn:'',link:SITE+'/'}),
+  make('lineup',{bg:'cream',kicker:'Hungry?',title:'Two ways to eat',items:[{name:'Build a DIY board',note:'From our rotating cheeses, dips, charcuterie and olives.',price:''},{name:'Dinner to your seat',note:'Scan the QR code and Olive Thyme next door delivers straight to you.',price:''}],btn:'See Olive Thyme\'s menu',link:'https://olivethyme.com.au/menu/'}),
+  make('story',{bg:'wine',flip:true,img:CDN+'4x3_MikaylaADAMS_RubysWineShop_11.jpg',img_alt:'Ruby the border collie under a chair',kicker:'Meet the boss',title:'Say hi to Ruby',body:'Our founder\'s border collie, and the reason the bar has a name. She greets every visitor like an old friend.',btn:'',link:SITE+'/pages/about'}),
+  make('visit',{bg:'cream'}),
+  make('signoff',{line:'No pretension, just great wine and good people.'})]};}},
+
  blank:{n:'Blank',desc:'Start with a headline and build it yourself.',f:function(){return {subject:'',pre:'',eyebrow:'Wine shop · Albion · Brisbane',sections:[make('letter',{title:'',body:''}),make('signoff')]};}}
 };
 
