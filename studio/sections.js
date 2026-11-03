@@ -60,7 +60,7 @@ var SECTIONS={
  hero:{n:'Big photo',cat:'Photos',bg:false,d:{img:CDN+'MikaylaADAMS_RubysWineShop_7.jpg',shape:'wide',img_alt:'Ruby\'s Wine Shop at dusk',img_link:SITE+'/'},
   r:function(s,h){return h.img('img',s.shape,600,'');}},
  photoHead:{n:'Photo with headline',cat:'Openers',d:{bg:'cream',img:CDN+'4x3_MikaylaADAMS_RubysWineShop_8.jpg',shape:'wide',img_alt:'A busy night at Ruby\'s',img_link:'',kicker:'Ruby\'s Weekly',title:'This week at Ruby\'s',body:'',btn:'',link:SITE+'/pages/find-us'},
-  r:function(s,h,t){return h.img('img',s.shape,600,'')+wrap(s,t,kick(h,t,'kicker')+h.line('title','h1','margin:0 0 16px 0;font-family:'+SERIF+';font-weight:700;font-size:40px;line-height:46px;color:'+t.ink+';','Headline')+h.para('body','font-family:'+SANS+';font-size:16px;line-height:26px;color:'+t.ink+';','A quick hello and a line about the week')+(h.btn('btn','link',t.bb,t.bf)?'<div style="padding-top:24px;">'+h.btn('btn','link',t.bb,t.bf)+'</div>':''),'36px 48px 40px 48px').replace('<h1 ','<h1 class="h1" ');}},
+  r:function(s,h,t){return h.img('img',s.shape,600,'')+wrap(s,t,kick(h,t,'kicker')+h.line('title','h1','margin:0 0 16px 0;font-family:'+SERIF+';font-weight:700;font-size:40px;line-height:46px;color:'+t.ink+';','Headline')+h.para('body','font-family:'+SANS+';font-size:16px;line-height:26px;color:'+t.ink+';','Your words. Leave a blank line for a new paragraph')+(h.btn('btn','link',t.bb,t.bf)?'<div style="padding-top:24px;">'+h.btn('btn','link',t.bb,t.bf)+'</div>':''),'36px 48px 40px 48px').replace('<h1 ','<h1 class="h1" ');}},
  letter:{n:'Headline',cat:'Openers',d:{bg:'cream',align:'left',kicker:'',title:'Headline goes here',body:'',btn:'',link:SITE+'/'},
   r:function(s,h,t){var al=s.align==='center'?'center':'left';return wrap(s,t,'<div style="text-align:'+al+';">'+kick(h,t,'kicker')+h.line('title','h1','margin:0 0 16px 0;font-family:'+SERIF+';font-weight:700;font-size:40px;line-height:46px;color:'+t.ink+';','Headline').replace('<h1 ','<h1 class="h1" ')+h.para('body','font-family:'+SANS+';font-size:16px;line-height:26px;color:'+t.ink+';','Your words')+'</div>'+(h.btn('btn','link',t.bb,t.bf,al)?'<div style="padding-top:24px;">'+h.btn('btn','link',t.bb,t.bf,al)+'</div>':''));}},
  date:{n:'Date callout',cat:'Openers',d:{bg:'wine',label:'Last orders',big:'Sun 13 Dec',body:'',btn:'',link:SITE+'/'},
@@ -159,7 +159,9 @@ var LAYOUTS={
   make('visit',{bg:'cream'}),
   make('signoff',{line:'No pretension, just great wine and good people.'})]};}},
 
- blank:{n:'Blank',desc:'Start with a headline and build it yourself.',f:function(){return {subject:'',pre:'',eyebrow:'Wine shop · Albion · Brisbane',sections:[make('letter',{title:'',body:''}),make('signoff')]};}}
+ simple:{n:'Simple email',desc:'One photo, a headline, a few lines and a button. For news, closures or anything quick.',f:function(){return {subject:'',pre:'',eyebrow:'Wine shop · Albion · Brisbane',sections:[
+  make('photoHead',{bg:'cream',img:CDN+'MikaylaADAMS_RubysWineShop_7.jpg',shape:'wide',img_alt:'Ruby\'s Wine Shop at dusk',img_link:SITE+'/',kicker:'',title:'',body:'',btn:'Find out more',link:SITE+'/'}),
+  make('signoff')]};}}
 };
 
 window.RS={CDN:CDN,SITE:SITE,C:C,PICS:PICS,LINKS:LINKS,THEMES:THEMES,SECTIONS:SECTIONS,CATS:CATS,LAYOUTS:LAYOUTS,make:make,renderEmail:renderEmail,renderSection:renderSection,get:get,imgUrl:imgUrl};
