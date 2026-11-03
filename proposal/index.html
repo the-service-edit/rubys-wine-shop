@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruby's List Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B1512;--paper:#F7F4EC;--brown:#3A2E25;--off:#F1EDE2;--mute:#6B5F54;--line:#DED6C8;
+--r-wine:#470606;--r-terra:#BA5B3E;--r-cream:#F2EBD7;--r-sand:#E5D9C2;--r-stone:#B8A88A}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Geist,'Helvetica Neue',Arial,sans-serif}
+.band{background:var(--brown);color:var(--off)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;padding-block:22px}
+header small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#D9D1C2}
+.lockup{display:flex;align-items:center;gap:18px;color:var(--off)}
+.lockup .x{font-size:20px;font-weight:300;color:#BFB4A3}
+.lockup .wm{font-family:'Playfair',Georgia,serif;font-weight:700;font-size:22px;color:#F1EDE2;white-space:nowrap;line-height:1}
+.intro .wrap{padding-block:12px 64px}
+.kick{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#BFB4A3;margin:0 0 14px}
+h1{margin:0;font-size:clamp(36px,6vw,80px);line-height:.95;letter-spacing:-.035em;text-transform:uppercase;font-weight:600;max-width:15ch;text-wrap:balance}
+.intro p{margin:20px 0 0;max-width:62ch;font-size:18px;line-height:1.6;color:#E6DFD2}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#5a4a3d;border-radius:18px;overflow:hidden;margin-top:40px;max-width:900px}
+.stat{background:#43362c;padding:20px 22px}
+.stat b{display:block;font-size:30px;font-weight:600;letter-spacing:-.02em;color:var(--off)}
+.stat span{font-size:14px;line-height:1.45;color:#D9D1C2}
+section.s .wrap{padding-block:72px 8px}
+.num{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-spacing:-.03em;text-transform:uppercase;font-weight:600;max-width:22ch}
+.lede{margin:0 0 32px;max-width:64ch;font-size:17px;line-height:1.6;color:#3d342d}
+/* capture table */
+.cap{border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:1.1fr 1.2fr 1.6fr;gap:24px;padding:20px 0;border-bottom:1px solid var(--line);align-items:start}
+.row.h{padding:10px 0;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.row .src{font-weight:600;font-size:17px}
+.row .now{font-size:15px;line-height:1.5;color:var(--mute)}
+.row .then{font-size:15px;line-height:1.55}
+.row .then b{font-weight:600}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;background:#E9E2D3;color:var(--brown);border-radius:999px;padding:4px 9px;margin-bottom:6px}
+.tag.big{background:var(--brown);color:var(--off)}
+.note{margin-top:20px;font-size:14px;line-height:1.55;color:var(--mute);max-width:70ch}
+/* mockups */
+.mocks{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:44px}
+.mock{background:#EDE7DA;border-radius:22px;padding:28px;min-width:0}
+.mock .cap-t{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:0 0 4px}
+.mock .cap-d{font-size:14px;line-height:1.5;color:#3d342d;margin:0 0 22px}
+.tent{display:flex;justify-content:center}
+.card6{width:100%;max-width:300px;aspect-ratio:105/148;background:var(--r-wine);color:var(--r-cream);border-radius:6px;padding:26px 24px;display:flex;flex-direction:column;box-shadow:0 18px 40px rgba(27,21,18,.25)}
+.card6 .eb{font-family:'DM Sans',Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--r-stone)}
+.card6 .hd{font-family:'Playfair',Georgia,serif;font-weight:700;font-size:30px;line-height:1.02;margin:10px 0 10px}
+.card6 .hd i{font-weight:400;color:var(--r-terra)}
+.card6 .bd{font-family:'DM Sans',Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.5;color:var(--r-sand)}
+.card6 .qr{margin-top:auto;display:flex;align-items:flex-end;gap:14px}
+.card6 .qr .q{background:var(--r-cream);padding:8px;border-radius:4px;width:96px;flex:none}
+.card6 .qr .q svg{display:block;width:100%;height:auto}
+.card6 .qr small{font-family:'DM Sans',Helvetica,Arial,sans-serif;font-size:11px;line-height:1.45;color:var(--r-sand)}
+.phone{max-width:300px;margin:0 auto;background:#111;border-radius:38px;padding:10px;box-shadow:0 18px 40px rgba(27,21,18,.22)}
+.screen{background:var(--r-cream);border-radius:29px;overflow:hidden;font-family:'DM Sans',Helvetica,Arial,sans-serif;color:var(--r-wine)}
+.screen .top{background:var(--r-wine);color:var(--r-cream);padding:22px 20px 18px}
+.screen .top .eb{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--r-stone)}
+.screen .top .hd{font-family:'Playfair',Georgia,serif;font-weight:700;font-size:24px;line-height:1.05;margin-top:6px}
+.screen .mod{padding:14px 20px;border-bottom:1px solid var(--r-sand)}
+.screen .mod .l{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--r-terra)}
+.screen .mod .t{font-family:'Playfair',Georgia,serif;font-weight:700;font-size:16px;margin-top:3px}
+.screen .mod .slot{margin-top:6px;height:8px;border-radius:4px;background:var(--r-sand)}
+.screen .mod .slot.s{width:62%}
+.screen .mod .pill{display:inline-block;margin-top:8px;font-size:11px;font-weight:700;background:var(--r-wine);color:var(--r-cream);border-radius:999px;padding:6px 12px}
+.screen .ft{padding:12px 20px 18px;font-size:10px;color:var(--r-stone)}
+/* flows */
+.flows{display:grid;gap:22px}
+.flow{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 26px}
+.flow h3{margin:0 0 4px;font-size:22px;letter-spacing:-.02em;font-weight:600}
+.flow .why{margin:0 0 18px;font-size:15px;line-height:1.5;color:var(--mute);max-width:70ch}
+.steps{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding-bottom:4px}
+.step{flex:1 1 0;min-width:190px;position:relative;padding-right:28px}
+.step:not(:last-child)::after{content:"";position:absolute;right:8px;top:22px;width:12px;height:12px;border-top:2px solid var(--line);border-right:2px solid var(--line);transform:rotate(45deg)}
+.step .when{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.step .what{margin-top:6px;background:var(--paper);border-radius:12px;padding:12px 14px;font-size:14.5px;line-height:1.45;height:calc(100% - 26px)}
+.step .what b{display:block;font-weight:600;margin-bottom:2px}
+.step .what a{color:var(--ink)}
+/* designs */
+.dgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.d{border-top:2px solid var(--ink);padding-top:14px}
+.d h3{margin:0 0 6px;font-size:19px;font-weight:600;letter-spacing:-.01em}
+.d p{margin:0;font-size:15px;line-height:1.55;color:#3d342d}
+.d a{color:var(--ink)}
+/* timeline */
+.tl{border-left:2px solid var(--line);margin-left:6px}
+.ti{position:relative;padding:0 0 26px 26px}
+.ti::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--brown)}
+.ti .dt{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.ti .tx{margin-top:4px;font-size:16px;line-height:1.5;max-width:68ch}
+/* price */
+.price .wrap{padding-block:72px 72px}
+.price h2{color:var(--off)}
+.pgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:start;margin-top:10px}
+.pcard{background:var(--off);color:var(--ink);border-radius:24px;padding:30px}
+.pcard .pn{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.pcard .amt{font-size:clamp(44px,6vw,64px);font-weight:600;letter-spacing:-.04em;line-height:1;margin:10px 0 4px}
+.pcard .amt small{font-size:16px;letter-spacing:0;font-weight:500;color:var(--mute)}
+.pcard .split{font-size:15px;line-height:1.5;color:#3d342d;margin:0 0 18px}
+.pcard ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
+.pcard li{padding:10px 0 10px 26px;border-bottom:1px solid var(--line);font-size:15px;line-height:1.45;position:relative}
+.pcard li::before{content:"";position:absolute;left:2px;top:15px;width:12px;height:7px;border-left:2px solid var(--brown);border-bottom:2px solid var(--brown);transform:rotate(-45deg)}
+.after p{margin:0 0 14px;font-size:17px;line-height:1.6;color:#E6DFD2;max-width:56ch}
+.after h3{margin:0 0 10px;font-size:20px;font-weight:600;color:var(--off)}
+.after .fine{font-size:14px;line-height:1.55;color:#CFC6B6}
+.close .wrap{padding-block:64px 64px}
+.close h2{color:var(--ink)}
+.need{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:8px 0 36px}
+.need div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;font-size:15px;line-height:1.5}
+.need b{display:block;font-weight:600;margin-bottom:4px}
+.cta{display:inline-block;background:var(--brown);color:var(--off);text-decoration:none;font-weight:600;border-radius:999px;padding:15px 26px;font-size:16px}
+.sig{margin-top:30px;font-size:15px;color:var(--mute)}
+.foot{font-size:13px;color:var(--mute);padding-block:22px 40px}
+@media (max-width:900px){
+ .row{grid-template-columns:1fr;gap:6px}.row.h{display:none}
+ .mocks,.pgrid{grid-template-columns:1fr}
+ .dgrid{grid-template-columns:1fr}
+ .need{grid-template-columns:1fr 1fr}
+ .steps{flex-direction:column;gap:14px;overflow:visible}
+ .step{min-width:0;padding-right:0}.step:not(:last-child)::after{display:none}
+ .step .what{height:auto}
+}
+@media (max-width:640px){
+ header .wrap{flex-direction:column-reverse;align-items:flex-start;gap:14px}
+ .lockup{gap:12px}.lockup svg{width:60px;height:32px}.lockup .wm{font-size:18px}
+ .stats{grid-template-columns:1fr}
+ .need{grid-template-columns:1fr}
+ .mock{padding:22px}
+}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap"><small>Prepared for Ruby&#x27;s Wine Shop</small><div class="lockup"><svg width="78" height="42" viewBox="0 0 120 64" role="img" aria-label="The Service Edit"><g font-family="Geist,Helvetica,Arial,sans-serif" font-weight="700" font-size="21" letter-spacing="-1" fill="currentColor" text-anchor="middle"><text x="60" y="19">THE</text><text x="60" y="40">SERVICE</text><text x="60" y="61">EDIT</text></g></svg><span class="x" aria-hidden="true">&times;</span><span class="wm">Ruby&#x27;s Wine Shop</span></div></div></header>
+
+<section class="band intro"><div class="wrap">
+<p class="kick">Proposal · The Ruby&#x27;s List Builder</p>
+<h1>Fill the list from the people already at your bar.</h1>
+<p>Tamara, you told me the newsletter is paused because everything is done by hand, and that you&#x27;re at 35 subscribers. This plan fixes both. It catches the people who already walk through your door, book the quiz and buy your Christmas boxes, and it turns the weekly email into a 15-minute job you can do from your phone.</p>
+<div class="stats">
+<div class="stat"><b>6</b><span>new ways onto your list, on top of the sign-up box on your homepage</span></div>
+<div class="stat"><b>3</b><span>automations that run on their own, so new people hear from you without you lifting a finger</span></div>
+<div class="stat"><b>15 min</b><span>to put together the weekly email from a template built in your brand</span></div>
+</div>
+</div></section>
+
+<section class="s"><div class="wrap">
+<div class="num">01 · Where your list comes from</div>
+<h2>Six more ways in, not one.</h2>
+<p class="lede">Right now the only way onto your list is the sign-up box on your homepage. Most of the people who love Ruby&#x27;s never see it, because they&#x27;re at the bar, not on the website. Here&#x27;s every point where you already meet them, and what changes.</p>
+<div class="cap">
+<div class="row h"><div>Where</div><div>Today</div><div>After</div></div>
+<div class="row"><div class="src"><span class="tag big">Biggest win</span><br>Quiz night</div><div class="now">Bookings and the waitlist go into Google Forms. The emails sit in a spreadsheet and never reach your list.</div><div class="then">Quiz booking moves onto a form with a <b>&ldquo;keep me posted&rdquo;</b> tick box. Then the hook: <b>subscribers get the booking link 48 hours before Instagram.</b> A night that books out is the best reason anyone has to join.</div></div>
+<div class="row"><div class="src">Tables and the bar</div><div class="now">No way to join while someone&#x27;s sitting with a glass.</div><div class="then">A small <b>QR card on every table and one at the bar</b>: &ldquo;This week&#x27;s pours, first.&rdquo; One scan, one email field, done. No discount or freebie, just the thing your newsletter already gives them.</div></div>
+<div class="row"><div class="src">Gift box and gift card checkout</div><div class="now">Every Christmas box and gift card buyer gives you their email, but isn&#x27;t asked to join.</div><div class="then">Switch on <b>&ldquo;Email me with news&rdquo;</b> at your Shopify checkout. It costs nothing and catches your highest-spending customers all year.</div></div>
+<div class="row"><div class="src">Ruby Custom requests</div><div class="now">The form takes name, email and phone, with no way to opt in.</div><div class="then">One <b>tick box added</b> to the request form. These are people spending $380 or more on a box, often for a whole team.</div></div>
+<div class="row"><div class="src">Instagram</div><div class="now">No sign-up link.</div><div class="then">Sign-up link in your bio, plus a <b>Story template</b> you post when the quiz link is about to drop: &ldquo;Subscribers get it first.&rdquo;</div></div>
+<div class="row"><div class="src">Past quiz bookers</div><div class="now">Sitting in your Google Forms spreadsheet.</div><div class="then">They didn&#x27;t sign up for marketing, so they get <b>one friendly invite</b> to join. Only the people who say yes go on the list. That keeps you on the right side of the Spam Act.</div></div>
+</div>
+
+<div class="mocks">
+<div class="mock">
+<p class="cap-t">The table card</p>
+<p class="cap-d">A6, printed on card, in your colours and fonts. Sits beside the snack menu.</p>
+<div class="tent"><div class="card6">
+<div class="eb">Ruby&#x27;s Weekly</div>
+<div class="hd">This week&#x27;s pours, <i>first.</i></div>
+<div class="bd">The by-the-glass list, what&#x27;s new on the shelf and first dibs on quiz night. One email a week, straight from us.</div>
+<div class="qr"><div class="q"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 116 116" class="segno"><path transform="scale(4)" class="qrline" stroke="#470606" d="M0 0.5h7m1 0h5m1 0h1m1 0h2m4 0h7m-29 1h1m5 0h1m1 0h1m1 0h2m3 0h4m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m4 0h3m2 0h1m1 0h1m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m2 0h3m2 0h1m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m6 0h3m3 0h2m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h2m7 0h1m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h1m2 0h3m3 0h1m-20 1h1m4 0h4m1 0h1m1 0h3m1 0h2m2 0h1m5 0h2m-29 1h2m1 0h3m2 0h1m1 0h1m1 0h2m1 0h1m1 0h3m3 0h2m1 0h2m-28 1h2m1 0h1m2 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h2m2 0h2m-27 1h1m2 0h2m4 0h3m1 0h2m1 0h1m2 0h2m1 0h2m1 0h1m-20 1h3m1 0h3m1 0h1m1 0h1m4 0h2m2 0h1m1 0h1m-28 1h1m1 0h1m1 0h2m1 0h2m3 0h2m3 0h1m1 0h2m1 0h1m1 0h2m1 0h2m-28 1h3m1 0h2m5 0h2m1 0h1m1 0h1m3 0h1m1 0h1m-19 1h1m3 0h2m4 0h2m2 0h3m2 0h5m-27 1h1m2 0h4m2 0h2m1 0h3m1 0h1m6 0h2m-27 1h1m2 0h3m1 0h1m1 0h1m3 0h2m3 0h2m2 0h1m1 0h1m1 0h1m1 0h1m-29 1h5m1 0h1m4 0h2m2 0h1m2 0h2m3 0h4m1 0h1m-29 1h1m2 0h1m3 0h3m2 0h1m7 0h3m1 0h2m1 0h1m-28 1h1m2 0h1m2 0h4m1 0h2m2 0h1m1 0h1m1 0h6m1 0h1m1 0h1m-21 1h2m2 0h1m2 0h1m3 0h2m3 0h3m-27 1h7m1 0h9m1 0h3m1 0h1m1 0h1m-25 1h1m5 0h1m2 0h1m8 0h3m3 0h2m2 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h9m-25 1h1m1 0h3m1 0h1m4 0h2m1 0h1m1 0h1m1 0h3m2 0h1m1 0h3m-28 1h1m1 0h3m1 0h1m6 0h2m2 0h1m1 0h9m-28 1h1m5 0h1m1 0h1m3 0h4m5 0h1m2 0h3m1 0h1m-29 1h7m2 0h3m2 0h1m2 0h1m1 0h1m2 0h1m1 0h3"/></svg>
+</div><small>Scan to join.<br>Unsubscribe anytime.</small></div>
+</div></div>
+</div>
+<div class="mock">
+<p class="cap-t">The weekly template</p>
+<p class="cap-d">Same blocks every week. You swap in the pours and the dates, and it&#x27;s ready to send.</p>
+<div class="phone"><div class="screen">
+<div class="top"><div class="eb">Ruby&#x27;s Weekly</div><div class="hd">Open this week</div></div>
+<div class="mod"><div class="l">By the glass</div><div class="t">Three pours to try</div><div class="slot"></div><div class="slot s"></div></div>
+<div class="mod"><div class="l">What&#x27;s on</div><div class="t">Quiz night</div><div class="slot s"></div><span class="pill">Book your table</span></div>
+<div class="mod"><div class="l">On the shelf</div><div class="t">New arrival</div><div class="slot"></div><div class="slot s"></div></div>
+<div class="mod"><div class="l">From Ruby</div><div class="t">One photo, one line</div><div class="slot s"></div></div>
+<div class="ft">3/297 Sandgate Road, Albion · Unsubscribe</div>
+</div></div>
+</div>
+</div>
+</div></section>
+
+<section class="s"><div class="wrap">
+<div class="num">02 · The emails that run on their own</div>
+<h2>Three automations, set up once.</h2>
+<p class="lede">These send themselves when someone joins, books or buys. You never have to remember them.</p>
+<div class="flows">
+<div class="flow"><h3>Welcome</h3><p class="why">Every new subscriber, from any of the six places, hears from you straight away while Ruby&#x27;s is fresh in their mind.</p>
+<div class="steps">
+<div class="step"><div class="when">Straight away</div><div class="what"><b>Welcome to the neighbourhood</b>The email you&#x27;ve already seen: what they&#x27;ll get each week, how to visit, and Ruby herself. <a href="https://rubys-wine-shop.theserviceedit.com/?qa=1" target="_blank" rel="noopener">See it</a></div></div>
+<div class="step"><div class="when">3 days later</div><div class="what"><b>Take a bottle home</b>The shelf: Swiss drops, skin-contact Georgians and your own Pet Nat, plus gift cards for the friend who&#x27;d love it here.</div></div>
+</div></div>
+<div class="flow"><h3>Quiz night</h3><p class="why">Turns your most popular night into the reason people join, and stops the waitlist living in a spreadsheet.</p>
+<div class="steps">
+<div class="step"><div class="when">When they book</div><div class="what"><b>You&#x27;re in</b>Booking confirmed, the date and what to expect.</div></div>
+<div class="step"><div class="when">When they join the waitlist</div><div class="what"><b>You&#x27;re on the list</b>Confirms the waitlist and that they&#x27;ll hear first if a table opens.</div></div>
+<div class="step"><div class="when">Each month</div><div class="what"><b>Early access</b>Subscribers get the booking link 48 hours before Instagram. A ready-made template you send in one click.</div></div>
+</div></div>
+<div class="flow"><h3>Gift box buyers</h3><p class="why">Your Christmas box customers are your best customers. This makes sure they come back in January.</p>
+<div class="steps">
+<div class="step"><div class="when">After ordering</div><div class="what"><b>Thank you</b>Order details, pickup or delivery, and that boxes are ready from Wednesday 2 December.</div></div>
+<div class="step"><div class="when">Mid January</div><div class="what"><b>Come in for a glass</b>For buyers who ticked the box at checkout: a thank-you for choosing Ruby&#x27;s, and an invitation to come and taste what&#x27;s open now.</div></div>
+</div></div>
+</div>
+</div></section>
+
+<section class="s"><div class="wrap">
+<div class="num">03 · The designs</div>
+<h2>Everything built in your brand.</h2>
+<p class="lede">Your fonts, your colours, your photos and your words. Nothing that looks like a template from somewhere else.</p>
+<div class="dgrid">
+<div class="d"><h3>Weekly newsletter template</h3><p>By the glass, what&#x27;s on, on the shelf and a line from Ruby. Built in your email tool so you just fill in the blanks. This is what gets your Friday email down to 15 minutes.</p></div>
+<div class="d"><h3>Two Christmas emails, sent for you</h3><p>The gift box email and the last-orders reminder from the <a href="https://rubys-wine-shop.theserviceedit.com/?qa=1" target="_blank" rel="noopener">mockups you&#x27;ve seen</a>, updated to your real cut-offs of 6 and 13 December. I write them, build them and send them.</p></div>
+<div class="d"><h3>Print and social</h3><p>The QR table card and a bar card, sent as print-ready files, plus the Instagram Story template for quiz early access.</p></div>
+<div class="d"><h3>Sign-up page</h3><p>A short page on your own site that every QR code and bio link points to. One field, and it says exactly what people get.</p></div>
+<div class="d"><h3>Six automated emails</h3><p>The welcome pair, the quiz booking and waitlist confirmations, and the gift box thank-you and January invite, plus the monthly early-access template.</p></div>
+<div class="d"><h3>A 30-minute handover</h3><p>A call where I show you how to send the weekly email and check your numbers. You&#x27;ll get a one-page how-to to keep.</p></div>
+</div>
+<p class="note">Built on Shopify Email, which is already part of your store. On most Shopify plans the first 10,000 emails a month are included, so at your size there&#x27;s no new software bill. If you&#x27;re using a different tool for the newsletter now, I&#x27;ll build in that instead.</p>
+</div></section>
+
+<section class="s"><div class="wrap">
+<div class="num">04 · Timeline</div>
+<h2>Live before the Christmas rush.</h2>
+<p class="lede">If we start next week, the capture points are working in time to catch your busiest weeks of the year.</p>
+<div class="tl">
+<div class="ti"><div class="dt">Week 1 · from Mon 9 Nov</div><div class="tx">Checkout and Ruby Custom opt-ins switched on. Sign-up page live. Table cards ready to print. Welcome emails running.</div></div>
+<div class="ti"><div class="dt">Week 2 · by Mon 16 Nov</div><div class="tx">Weekly template, quiz booking form and quiz emails ready. Invite goes to past quiz bookers.</div></div>
+<div class="ti"><div class="dt">Thu 19 Nov</div><div class="tx">Christmas gift box email sends, well before Ruby Custom orders close on 6 December.</div></div>
+<div class="ti"><div class="dt">Before December&#x27;s quiz</div><div class="tx">First early-access send to subscribers, 48 hours before the link goes on Instagram. We&#x27;ll set the date together.</div></div>
+<div class="ti"><div class="dt">Thu 10 Dec</div><div class="tx">Last orders email for the Explorer&#x27;s and Introduction boxes, which close on Sunday 13 December.</div></div>
+<div class="ti"><div class="dt">Late January</div><div class="tx">One-page list report: how many people joined from each of the six places, and what the Christmas emails sold.</div></div>
+</div>
+</div></section>
+
+<section class="band price"><div class="wrap">
+<div class="num" style="color:#BFB4A3">05 · Investment</div>
+<h2>One fixed price. No monthly fee.</h2>
+<div class="pgrid">
+<div class="pcard">
+<div class="pn">The Ruby&#x27;s List Builder</div>
+<div class="amt">$1,200 <small>+ GST, one-off</small></div>
+<p class="split">Paid in two halves: $600 to start, and $600 when the Christmas gift box email goes out.</p>
+<ul>
+<li>Six capture points set up, including the quiz booking form</li>
+<li>Sign-up page on your site</li>
+<li>Three automations, six emails</li>
+<li>Weekly newsletter and quiz early-access templates</li>
+<li>Two Christmas emails written, built and sent for you</li>
+<li>Table card, bar card and Story template, print-ready</li>
+<li>30-minute handover and a one-page how-to</li>
+<li>January list report</li>
+</ul>
+</div>
+<div class="after">
+<h3>After that, it&#x27;s yours.</h3>
+<p>You send the weekly email yourself from the template. Everything else keeps running on its own.</p>
+<p>When your list gets to around 500 people, it&#x27;s worth more than one email a week from a busy owner. That&#x27;s when we can talk about my monthly service, where I write and send four emails a month for you. No pressure and no lock-in. If it doesn&#x27;t make sense for you, I&#x27;ll say so.</p>
+<p class="fine">Not included: printing the cards, and any Shopify or email fees beyond your current plan. I&#x27;ll only ever ask for collaborator access to your store, never your password.</p>
+</div>
+</div>
+</div></section>
+
+<section class="s close"><div class="wrap">
+<div class="num">06 · Next step</div>
+<h2>What I need from you.</h2>
+<div class="need">
+<div><b>Store access</b>Accept a Shopify collaborator request, so I can work in your store without your login.</div>
+<div><b>The quiz details</b>How bookings work now, table sizes, and December&#x27;s date.</div>
+<div><b>Your photos</b>OK to use the photos on your site and Instagram, or a few new ones of the bar and Ruby.</div>
+<div><b>15 minutes a week</b>To approve emails before they send. Nothing goes out without your yes.</div>
+</div>
+<a class="cta" href="mailto:hello@theserviceedit.com?subject=Ruby%27s%20List%20Builder%3A%20let%27s%20go">Let&#x27;s go</a>
+<p class="sig">I spent over 20 years in hospitality and owned my own cafés for close to a decade. I know how hard it is to win a regular, and how easy it is to lose touch with one. This is the system I&#x27;d want in my own venue.<br><br>Mel Cox · The Service Edit · hello@theserviceedit.com · theserviceedit.com</p>
+</div></section>
+<div class="wrap foot">Prepared for Ruby&#x27;s Wine Shop, Albion, November 2026. Prices in Australian dollars.</div>
+</body>
+</html>
