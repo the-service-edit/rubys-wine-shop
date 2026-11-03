@@ -106,6 +106,13 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 .pcard ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--line)}
 .pcard li{padding:10px 0 10px 26px;border-bottom:1px solid var(--line);font-size:15px;line-height:1.45;position:relative}
 .pcard li::before{content:"";position:absolute;left:2px;top:15px;width:12px;height:7px;border-left:2px solid var(--brown);border-bottom:2px solid var(--brown);transform:rotate(-45deg)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;margin:8px 0 36px}
+.pcard.rec{box-shadow:0 0 0 3px #C9B48E}
+.badge{display:inline-block;background:var(--brown);color:var(--off);border-radius:999px;padding:4px 10px;margin:0 10px 6px 0;letter-spacing:.1em}
+.opt-note{margin:16px 0 0;font-size:14px;line-height:1.55;color:var(--mute)}
+.opt-note a{color:var(--ink);font-weight:600}
+.pintro{margin:0 0 26px;max-width:62ch;font-size:17px;line-height:1.6;color:#E6DFD2}
+.after{max-width:760px}
 .after p{margin:0 0 14px;font-size:17px;line-height:1.6;color:#E6DFD2;max-width:56ch}
 .after h3{margin:0 0 10px;font-size:20px;font-weight:600;color:var(--off)}
 .after .fine{font-size:14px;line-height:1.55;color:#CFC6B6}
@@ -119,7 +126,7 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 .foot{font-size:13px;color:var(--mute);padding-block:22px 40px}
 @media (max-width:900px){
  .row{grid-template-columns:1fr;gap:6px}.row.h{display:none}
- .mocks,.pgrid{grid-template-columns:1fr}
+ .mocks,.pgrid,.opts{grid-template-columns:1fr}
  .dgrid{grid-template-columns:1fr}
  .need{grid-template-columns:1fr 1fr}
  .steps{flex-direction:column;gap:14px;overflow:visible}
@@ -141,7 +148,7 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 <section class="band intro"><div class="wrap">
 <p class="kick">Proposal · The Ruby&#x27;s List Builder</p>
 <h1>Fill the list from the people already at your bar.</h1>
-<p>Tamara, you told me the newsletter is paused because everything is done by hand, and that you&#x27;re at 35 subscribers. This plan fixes both. It catches the people who already walk through your door, book the quiz and buy your Christmas boxes, and it turns the weekly email into a 15-minute job you can do from your phone.</p>
+<p>Tamara, you told me the newsletter is paused because everything is done by hand, and that you&#x27;re at 35 subscribers. This plan fixes both. It catches the people who already walk through your door, book the quiz and buy your Christmas boxes, and it turns the weekly email into a 15-minute job.</p>
 <div class="stats">
 <div class="stat"><b>6</b><span>new ways onto your list, on top of the sign-up box on your homepage</span></div>
 <div class="stat"><b>3</b><span>automations that run on their own, so new people hear from you without you lifting a finger</span></div>
@@ -155,7 +162,7 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 <p class="lede">Right now the only way onto your list is the sign-up box on your homepage. Most of the people who love Ruby&#x27;s never see it, because they&#x27;re at the bar, not on the website. Here&#x27;s every point where you already meet them, and what changes.</p>
 <div class="cap">
 <div class="row h"><div>Where</div><div>Today</div><div>After</div></div>
-<div class="row"><div class="src"><span class="tag big">Biggest win</span><br>Quiz night</div><div class="now">Bookings and the waitlist go into Google Forms. The emails sit in a spreadsheet and never reach your list.</div><div class="then">Quiz booking moves onto a form with a <b>&ldquo;keep me posted&rdquo;</b> tick box. Then the hook: <b>subscribers get the booking link 48 hours before Instagram.</b> A night that books out is the best reason anyone has to join.</div></div>
+<div class="row"><div class="src"><span class="tag big">Biggest win</span><br>Quiz night</div><div class="now">Bookings and the waitlist go into Google Forms. The emails sit in a spreadsheet and never reach your list.</div><div class="then">An <b>&ldquo;Add me to Ruby&#x27;s Weekly&rdquo;</b> tick box on the booking and waitlist forms. Then the hook: <b>subscribers get the booking link 48 hours before Instagram.</b> A night that books out is the best reason anyone has to join.</div></div>
 <div class="row"><div class="src">Tables and the bar</div><div class="now">No way to join while someone&#x27;s sitting with a glass.</div><div class="then">A small <b>QR card on every table and one at the bar</b>: &ldquo;This week&#x27;s pours, first.&rdquo; One scan, one email field, done. No discount or freebie, just the thing your newsletter already gives them.</div></div>
 <div class="row"><div class="src">Gift box and gift card checkout</div><div class="now">Every Christmas box and gift card buyer gives you their email, but isn&#x27;t asked to join.</div><div class="then">Switch on <b>&ldquo;Email me with news&rdquo;</b> at your Shopify checkout. It costs nothing and catches your highest-spending customers all year.</div></div>
 <div class="row"><div class="src">Ruby Custom requests</div><div class="now">The form takes name, email and phone, with no way to opt in.</div><div class="then">One <b>tick box added</b> to the request form. These are people spending $380 or more on a box, often for a whole team.</div></div>
@@ -176,7 +183,7 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 </div></div>
 </div>
 <div class="mock">
-<p class="cap-t">The weekly template</p>
+<p class="cap-t">The weekly email</p>
 <p class="cap-d">Same blocks every week. You swap in the pours and the dates, and it&#x27;s ready to send.</p>
 <div class="phone"><div class="screen">
 <div class="top"><div class="eb">Ruby&#x27;s Weekly</div><div class="hd">Open this week</div></div>
@@ -193,40 +200,65 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 <section class="s"><div class="wrap">
 <div class="num">02 · The emails that run on their own</div>
 <h2>Three automations, set up once.</h2>
-<p class="lede">These send themselves when someone joins, books or buys. You never have to remember them.</p>
+<p class="lede">These send themselves when someone joins or buys, using the automations already built into Shopify. You never have to remember them.</p>
 <div class="flows">
 <div class="flow"><h3>Welcome</h3><p class="why">Every new subscriber, from any of the six places, hears from you straight away while Ruby&#x27;s is fresh in their mind.</p>
 <div class="steps">
 <div class="step"><div class="when">Straight away</div><div class="what"><b>Welcome to the neighbourhood</b>The email you&#x27;ve already seen: what they&#x27;ll get each week, how to visit, and Ruby herself. <a href="https://rubys-wine-shop.theserviceedit.com/?qa=1" target="_blank" rel="noopener">See it</a></div></div>
 <div class="step"><div class="when">3 days later</div><div class="what"><b>Take a bottle home</b>The shelf: Swiss drops, skin-contact Georgians and your own Pet Nat, plus gift cards for the friend who&#x27;d love it here.</div></div>
 </div></div>
-<div class="flow"><h3>Quiz night</h3><p class="why">Turns your most popular night into the reason people join, and stops the waitlist living in a spreadsheet.</p>
+<div class="flow"><h3>Gift box reminder</h3><p class="why">Someone starts ordering a $160 to $380 box, then gets distracted. This brings them back to finish it.</p>
 <div class="steps">
-<div class="step"><div class="when">When they book</div><div class="what"><b>You&#x27;re in</b>Booking confirmed, the date and what to expect.</div></div>
-<div class="step"><div class="when">When they join the waitlist</div><div class="what"><b>You&#x27;re on the list</b>Confirms the waitlist and that they&#x27;ll hear first if a table opens.</div></div>
-<div class="step"><div class="when">Each month</div><div class="what"><b>Early access</b>Subscribers get the booking link 48 hours before Instagram. A ready-made template you send in one click.</div></div>
+<div class="step"><div class="when">A few hours later</div><div class="what"><b>Still deciding?</b>Their box, the order cut-off and a link straight back to checkout. Shopify doesn&#x27;t count these against your monthly email allowance.</div></div>
 </div></div>
-<div class="flow"><h3>Gift box buyers</h3><p class="why">Your Christmas box customers are your best customers. This makes sure they come back in January.</p>
+<div class="flow"><h3>After they buy</h3><p class="why">Your Christmas box customers are your best customers. This makes sure they come back in January.</p>
 <div class="steps">
-<div class="step"><div class="when">After ordering</div><div class="what"><b>Thank you</b>Order details, pickup or delivery, and that boxes are ready from Wednesday 2 December.</div></div>
+<div class="step"><div class="when">After ordering</div><div class="what"><b>Thank you</b>A warm thank-you, pickup or delivery details, and that boxes are ready from Wednesday 2 December.</div></div>
 <div class="step"><div class="when">Mid January</div><div class="what"><b>Come in for a glass</b>For buyers who ticked the box at checkout: a thank-you for choosing Ruby&#x27;s, and an invitation to come and taste what&#x27;s open now.</div></div>
 </div></div>
 </div>
 </div></section>
 
-<section class="s"><div class="wrap">
-<div class="num">03 · The designs</div>
-<h2>Everything built in your brand.</h2>
-<p class="lede">Your fonts, your colours, your photos and your words. Nothing that looks like a template from somewhere else.</p>
-<div class="dgrid">
-<div class="d"><h3>Weekly newsletter template</h3><p>By the glass, what&#x27;s on, on the shelf and a line from Ruby. Built in your email tool so you just fill in the blanks. This is what gets your Friday email down to 15 minutes.</p></div>
-<div class="d"><h3>Two Christmas emails, sent for you</h3><p>The gift box email and the last-orders reminder from the <a href="https://rubys-wine-shop.theserviceedit.com/?qa=1" target="_blank" rel="noopener">mockups you&#x27;ve seen</a>, updated to your real cut-offs of 6 and 13 December. I write them, build them and send them.</p></div>
-<div class="d"><h3>Print and social</h3><p>The QR table card and a bar card, sent as print-ready files, plus the Instagram Story template for quiz early access.</p></div>
-<div class="d"><h3>Sign-up page</h3><p>A short page on your own site that every QR code and bio link points to. One field, and it says exactly what people get.</p></div>
-<div class="d"><h3>Six automated emails</h3><p>The welcome pair, the quiz booking and waitlist confirmations, and the gift box thank-you and January invite, plus the monthly early-access template.</p></div>
-<div class="d"><h3>A 30-minute handover</h3><p>A call where I show you how to send the weekly email and check your numbers. You&#x27;ll get a one-page how-to to keep.</p></div>
+<section class="band price"><div class="wrap">
+<div class="num" style="color:#BFB4A3">03 · Two ways to do it</div>
+<h2>Pick how you want to write your weekly email.</h2>
+<p class="pintro">Both options fill your list, set up the automations and send your two Christmas emails. The difference is how you put together the weekly email after that.</p>
+<div class="opts">
+<div class="pcard">
+<div class="pn">Option 1 · The List Builder</div>
+<div class="amt">$750 <small>+ GST, one-off</small></div>
+<p class="split">Paid in two halves: $375 to start, and $375 when the Christmas gift box email goes out.</p>
+<ul>
+<li>Six ways onto your list, including the quiz booking forms</li>
+<li>Sign-up page on your site</li>
+<li>Three automations, five emails</li>
+<li>Two Christmas emails written, built and sent for you</li>
+<li>Table card, bar card and Story template, print-ready</li>
+<li>A weekly template built in Shopify&#x27;s own email editor, in your colours</li>
+<li>30-minute handover and a January list report</li>
+</ul>
+<p class="opt-note">You duplicate the template each week and change the words and photos in Shopify. It does the job, but Shopify&#x27;s editor can&#x27;t match your fonts and layouts exactly.</p>
 </div>
-<p class="note">Built on Shopify Email, which is already part of your store. On most Shopify plans the first 10,000 emails a month are included, so at your size there&#x27;s no new software bill. If you&#x27;re using a different tool for the newsletter now, I&#x27;ll build in that instead.</p>
+<div class="pcard rec">
+<div class="pn"><span class="badge">Recommended</span>Option 2 · List Builder + Email Studio</div>
+<div class="amt">$1,200 <small>+ GST, one-off</small></div>
+<p class="split">Paid in two halves: $600 to start, and $600 when the Christmas gift box email goes out.</p>
+<ul>
+<li><b>Everything in Option 1</b></li>
+<li><b>Ruby&#x27;s Email Studio:</b> your own email editor, built in your fonts, colours and photos</li>
+<li>Ready-made layouts for the weekly email, quiz early access, events and gift occasions</li>
+<li>Tap Copy, paste into Shopify Email, send. About 15 minutes a week</li>
+<li>Every email looks like the ones in your mockups, not like a template</li>
+</ul>
+<p class="opt-note"><a href="../studio/" target="_blank" rel="noopener">Try the Email Studio now</a>. It&#x27;s a working version with your photos, so you can see exactly what you&#x27;d use each week.</p>
+</div>
+</div>
+<div class="after">
+<h3>After that, it&#x27;s yours.</h3>
+<p>You send the weekly email yourself. Everything else keeps running on its own. There&#x27;s no monthly fee and nothing to keep paying for.</p>
+<p>When your list gets to around 500 people, it&#x27;s worth more than one email a week from a busy owner. That&#x27;s when we can talk about my monthly service, where I write and send four emails a month for you. No pressure and no lock-in. If it doesn&#x27;t make sense for you, I&#x27;ll say so.</p>
+<p class="fine">Built on Shopify Email, which is already part of your store. On most Shopify plans the first 10,000 emails a month are included. Not included: printing the cards, and any Shopify fees beyond your current plan. I&#x27;ll only ever ask for collaborator access to your store, never your password.</p>
+</div>
 </div></section>
 
 <section class="s"><div class="wrap">
@@ -235,7 +267,7 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 <p class="lede">If we start next week, the capture points are working in time to catch your busiest weeks of the year.</p>
 <div class="tl">
 <div class="ti"><div class="dt">Week 1 · from Mon 9 Nov</div><div class="tx">Checkout and Ruby Custom opt-ins switched on. Sign-up page live. Table cards ready to print. Welcome emails running.</div></div>
-<div class="ti"><div class="dt">Week 2 · by Mon 16 Nov</div><div class="tx">Weekly template, quiz booking form and quiz emails ready. Invite goes to past quiz bookers.</div></div>
+<div class="ti"><div class="dt">Week 2 · by Mon 16 Nov</div><div class="tx">Quiz form tick boxes added, gift box and after-purchase emails running, and your weekly template or Email Studio ready. Invite goes to past quiz bookers.</div></div>
 <div class="ti"><div class="dt">Thu 19 Nov</div><div class="tx">Christmas gift box email sends, well before Ruby Custom orders close on 6 December.</div></div>
 <div class="ti"><div class="dt">Before December&#x27;s quiz</div><div class="tx">First early-access send to subscribers, 48 hours before the link goes on Instagram. We&#x27;ll set the date together.</div></div>
 <div class="ti"><div class="dt">Thu 10 Dec</div><div class="tx">Last orders email for the Explorer&#x27;s and Introduction boxes, which close on Sunday 13 December.</div></div>
@@ -243,36 +275,8 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 </div>
 </div></section>
 
-<section class="band price"><div class="wrap">
-<div class="num" style="color:#BFB4A3">05 · Investment</div>
-<h2>One fixed price. No monthly fee.</h2>
-<div class="pgrid">
-<div class="pcard">
-<div class="pn">The Ruby&#x27;s List Builder</div>
-<div class="amt">$1,200 <small>+ GST, one-off</small></div>
-<p class="split">Paid in two halves: $600 to start, and $600 when the Christmas gift box email goes out.</p>
-<ul>
-<li>Six capture points set up, including the quiz booking form</li>
-<li>Sign-up page on your site</li>
-<li>Three automations, six emails</li>
-<li>Weekly newsletter and quiz early-access templates</li>
-<li>Two Christmas emails written, built and sent for you</li>
-<li>Table card, bar card and Story template, print-ready</li>
-<li>30-minute handover and a one-page how-to</li>
-<li>January list report</li>
-</ul>
-</div>
-<div class="after">
-<h3>After that, it&#x27;s yours.</h3>
-<p>You send the weekly email yourself from the template. Everything else keeps running on its own.</p>
-<p>When your list gets to around 500 people, it&#x27;s worth more than one email a week from a busy owner. That&#x27;s when we can talk about my monthly service, where I write and send four emails a month for you. No pressure and no lock-in. If it doesn&#x27;t make sense for you, I&#x27;ll say so.</p>
-<p class="fine">Not included: printing the cards, and any Shopify or email fees beyond your current plan. I&#x27;ll only ever ask for collaborator access to your store, never your password.</p>
-</div>
-</div>
-</div></section>
-
 <section class="s close"><div class="wrap">
-<div class="num">06 · Next step</div>
+<div class="num">05 · Next step</div>
 <h2>What I need from you.</h2>
 <div class="need">
 <div><b>Store access</b>Accept a Shopify collaborator request, so I can work in your store without your login.</div>

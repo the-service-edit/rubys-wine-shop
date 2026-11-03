@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ruby's Email Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#470606;--terra:#BA5B3E;--cream:#F2EBD7;--sand:#E5D9C2;--stone:#B8A88A;--paper:#FAF6EC;--ink:#2a1a14;--mute:#7a6455}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--sand);color:var(--ink);font-family:'DM Sans',Helvetica,Arial,sans-serif;font-size:15px}
+button,input,textarea,select{font:inherit;color:inherit}
+.top{position:sticky;top:0;z-index:5;background:var(--wine);color:var(--cream);display:flex;align-items:center;gap:14px;padding:12px max(16px,env(safe-area-inset-left,0px));flex-wrap:wrap}
+.top img{height:38px;width:auto;display:block;filter:brightness(0) invert(93%) sepia(10%) saturate(300%)}
+.top .t{font-family:'Playfair',Georgia,serif;font-weight:700;font-size:20px;line-height:1}
+.top .t small{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);margin-top:4px}
+.top .sp{flex:1}
+.tpl{display:flex;align-items:center;gap:8px}
+.tpl label{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--stone)}
+.tpl select{background:#5a1414;color:var(--cream);border:1px solid #7a2a24;border-radius:999px;padding:8px 12px}
+.btn{border:0;border-radius:999px;padding:10px 18px;font-weight:700;cursor:pointer;background:var(--cream);color:var(--wine);white-space:nowrap}
+.btn.terra{background:var(--terra);color:var(--cream)}
+.btn.ghost{background:transparent;color:var(--wine);border:1px solid var(--stone)}
+.btn.sm{padding:6px 12px;font-size:13px}
+.main{display:grid;grid-template-columns:minmax(340px,460px) 1fr;gap:0;min-height:calc(100vh - 64px)}
+.ed{background:var(--paper);border-right:1px solid var(--stone);padding:18px 16px 120px;overflow:auto;max-height:calc(100vh - 64px)}
+.pv{padding:18px 18px 80px;display:flex;flex-direction:column;align-items:center;overflow:auto;max-height:calc(100vh - 64px)}
+.sec{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);margin:18px 0 8px}
+.sec:first-child{margin-top:0}
+.f{margin-bottom:10px}
+.f label{display:block;font-size:12.5px;font-weight:700;color:var(--wine);margin-bottom:4px}
+.f .hint{font-size:12px;color:var(--mute);margin-top:3px;line-height:1.4}
+.f input,.f textarea,.f select{width:100%;background:#fff;border:1px solid #d9ccb3;border-radius:10px;padding:9px 11px;font-size:15px}
+.f textarea{min-height:84px;resize:vertical;line-height:1.45}
+.f input:focus,.f textarea:focus,.f select:focus{outline:2px solid var(--terra);outline-offset:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.blk{background:#fff;border:1px solid #e3d7c0;border-radius:14px;margin-bottom:10px;overflow:hidden}
+.blk>header{display:flex;align-items:center;gap:6px;padding:9px 10px 9px 14px;background:var(--cream);cursor:pointer;user-select:none}
+.blk>header b{flex:1;font-size:14px;color:var(--wine)}
+.blk>header b span{font-weight:400;color:var(--mute)}
+.ib{width:30px;height:30px;border-radius:8px;border:1px solid #d9ccb3;background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--wine);font-size:14px;line-height:1}
+.ib:disabled{opacity:.35;cursor:default}
+.blk .body{padding:12px 14px 4px;display:none}
+.blk.open .body{display:block}
+.item{border-left:3px solid var(--sand);padding-left:10px;margin-bottom:10px}
+.item .x{float:right}
+.add{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.add button{border:1px dashed var(--terra);background:transparent;color:var(--terra);border-radius:999px;padding:7px 12px;font-weight:700;font-size:13px;cursor:pointer}
+.pics{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+.pics button{padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;cursor:pointer;background:var(--sand);aspect-ratio:1}
+.pics button.on{border-color:var(--terra)}
+.pics img{width:100%;height:100%;object-fit:cover;display:block}
+.pvbar{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap;justify-content:center}
+.seg{display:flex;background:#fff;border-radius:999px;padding:3px;border:1px solid var(--stone)}
+.seg button{border:0;background:transparent;border-radius:999px;padding:6px 14px;font-weight:700;font-size:13px;cursor:pointer;color:var(--wine)}
+.seg button.on{background:var(--wine);color:var(--cream)}
+.size{font-size:12.5px;color:var(--mute)}
+.frame{background:#fff;border-radius:18px;box-shadow:0 18px 50px rgba(71,6,6,.18);overflow:hidden;transition:width .2s}
+.frame iframe{display:block;width:100%;height:1400px;border:0}
+.how{max-width:640px;width:100%;margin-top:22px;background:var(--paper);border-radius:16px;padding:18px 20px;font-size:14.5px;line-height:1.55}
+.how h3{margin:0 0 8px;font-family:'Playfair',Georgia,serif;font-size:20px;color:var(--wine)}
+.how ol{margin:0;padding-left:20px}
+.how li{margin-bottom:6px}
+code{background:var(--cream);border-radius:5px;padding:1px 5px;font-size:13px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(20px);background:var(--wine);color:var(--cream);padding:12px 18px;border-radius:999px;font-weight:700;opacity:0;transition:.25s;pointer-events:none;z-index:20}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.credit{font-size:12px;color:var(--mute);margin-top:22px}
+.credit a{color:var(--mute)}
+.tabs{display:none}
+@media (max-width:900px){
+ .main{grid-template-columns:1fr}
+ .ed,.pv{max-height:none}
+ .tabs{display:flex;position:sticky;top:64px;z-index:4;background:var(--sand);padding:8px 16px;gap:8px}
+ .tabs button{flex:1}
+ body[data-tab="edit"] .pv{display:none}
+ body[data-tab="preview"] .ed{display:none}
+ .top .tpl label{display:none}
+}
+</style>
+</head>
+<body data-tab="edit">
+<div class="top">
+<img src="https://cdn.shopify.com/s/files/1/0836/3622/4220/files/rubys-logo.png?width=200" alt="Ruby's Wine Shop">
+<div class="t">Email Studio<small>Ruby&#x27;s Wine Shop</small></div>
+<div class="sp"></div>
+<div class="tpl"><label for="tplSel">Start from</label><select id="tplSel"></select></div>
+<button class="btn" id="copyBtn" type="button">Copy for Shopify</button>
+</div>
+<div class="tabs"><button class="btn sm" data-t="edit" type="button">Write</button><button class="btn sm ghost" data-t="preview" type="button">Preview</button></div>
+
+<div class="main">
+<aside class="ed" id="ed"></aside>
+<section class="pv">
+<div class="pvbar">
+<div class="seg" id="seg"><button type="button" data-w="640" class="on">Desktop</button><button type="button" data-w="375">Phone</button></div>
+<span class="size" id="size"></span>
+<button class="btn sm ghost" id="dlBtn" type="button">Download</button>
+</div>
+<div class="frame" id="frame" style="width:640px;max-width:100%"><iframe id="pv" title="Email preview"></iframe></div>
+<div class="how">
+<h3>Sending it from Shopify</h3>
+<ol>
+<li>Tap <b>Copy for Shopify</b> at the top.</li>
+<li>On your computer, open Shopify Email, create a new email and choose <b>Code your own</b>.</li>
+<li>Select everything in the code box, paste over it, and save.</li>
+<li>Copy the subject line and preview text from the left into Shopify&#x27;s fields.</li>
+<li>Send a test to yourself, check it on your phone, then schedule it.</li>
+</ol>
+<p style="margin:12px 0 0">Want to change something after pasting? Change it here and paste again. Your latest email is saved in this browser automatically.</p>
+<p class="credit">Built for Ruby&#x27;s by <a href="https://theserviceedit.com" target="_blank" rel="noopener">The Service Edit</a>.</p>
+</div>
+</section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+var CDN='https://cdn.shopify.com/s/files/1/0836/3622/4220/files/';
+var SITE='https://rubyswineshop.com.au';
+var PICS=[
+ {f:'MikaylaADAMS_RubysWineShop_7.jpg',l:'Shopfront at dusk'},
+ {f:'4x3_MikaylaADAMS_RubysWineShop_8.jpg',l:'The bar on a busy night'},
+ {f:'RubysAperoApril_012.jpg',l:'Snack board and a glass of red'},
+ {f:'RubysAperoApril_0118.jpg',l:'A bottle to take home'},
+ {f:'4x3_MikaylaADAMS_RubysWineShop_11.jpg',l:'Ruby under the chair'},
+ {f:'Pub_Quiz_Night.png',l:'Quiz night poster'},
+ {f:'gift-boxes-banner-v2.jpg',l:'Christmas gift boxes'},
+ {f:'rubys-cheers-hands.png',l:'Cheers illustration'}
+];
+var LINKS=[[SITE+'/','Home'],[SITE+'/pages/whats-on','What\'s on'],[SITE+'/pages/gift-boxes','Gift boxes'],[SITE+'/pages/gift-cards','Gift cards'],[SITE+'/pages/find-us','Find us'],[SITE+'/pages/about','About'],[SITE+'/collections/merch','Merch'],['https://www.instagram.com/rubys_wine_shop','Instagram'],['https://olivethyme.com.au/menu/','Olive Thyme menu']];
+var C={wine:'#470606',terra:'#BA5B3E',cream:'#F2EBD7',sand:'#E5D9C2',stone:'#B8A88A'};
+var SERIF="'Playfair',Georgia,'Times New Roman',serif", SANS="'DM Sans',Helvetica,Arial,sans-serif";
+var TYPES={
+ hero:{n:'Photo',d:function(){return {img:CDN+PICS[0].f,shape:'wide',alt:'',link:SITE+'/'};}},
+ text:{n:'Heading and words',d:function(){return {title:'',body:'',btnLabel:'',btnLink:''};}},
+ list:{n:'Line-up',d:function(){return {kicker:'By the glass',title:'Open this week',items:[{name:'',note:'',price:''}],btnLabel:'',btnLink:''};}},
+ event:{n:'Event',d:function(){return {kicker:'What\'s on',title:'',when:'',body:'',btnLabel:'Find out more',btnLink:SITE+'/pages/whats-on'};}},
+ split:{n:'Photo and story',d:function(){return {img:CDN+PICS[4].f,kicker:'From Ruby',title:'',body:''};}},
+ button:{n:'Button',d:function(){return {label:'Come in this week',link:SITE+'/pages/find-us'};}},
+ signoff:{n:'Sign-off',d:function(){return {line:'See you at the bar.',from:'The Ruby\'s crew (and Ruby)'};}}
+};
+var uid=0; function B(t,o){var b=TYPES[t].d();for(var k in o)b[k]=o[k];b.type=t;b.id='b'+(++uid);return b;}
+
+var TEMPLATES={
+ weekly:{n:'Ruby\'s Weekly',f:function(){return {subject:'This week at Ruby\'s',pre:'What\'s open by the glass, what\'s on and what\'s new on the shelf.',eyebrow:'Ruby\'s Weekly',blocks:[
+  B('hero',{img:CDN+'4x3_MikaylaADAMS_RubysWineShop_8.jpg',shape:'wide',alt:'A busy night at the bar at Ruby\'s',link:SITE+'/pages/find-us'}),
+  B('text',{title:'Here\'s what\'s open this week.',body:'A quick hello and one line about the week. Keep it short and sound like you do at the bar.'}),
+  B('list',{kicker:'By the glass',title:'Three to try',items:[{name:'Our house-made Pet Nat',note:'One line on how it tastes right now.',price:''},{name:'Something Swiss',note:'The producer, the region and why you love it.',price:''},{name:'From our QLD backyard',note:'Who made it and what to drink it with.',price:''}],btnLabel:'Come in for a glass',btnLink:SITE+'/pages/find-us'}),
+  B('event',{kicker:'What\'s on',title:'Quiz night with The Weekly Fifty',when:'Second Wednesday of the month',body:'Every second Wednesday, hosted by The Weekly Fifty crew. Spots go fast.',btnLabel:'See what\'s on',btnLink:SITE+'/pages/whats-on'}),
+  B('split',{img:CDN+'RubysAperoApril_0118.jpg',kicker:'On the shelf',title:'New this week',body:'The bottle to take home this week, and who you\'d give it to.'}),
+  B('signoff',{})]};}},
+ quiz:{n:'Quiz early access',f:function(){return {subject:'Quiz night: you get first dibs',pre:'Bookings open to subscribers 48 hours before Instagram.',eyebrow:'Subscribers first',blocks:[
+  B('hero',{img:CDN+'Pub_Quiz_Night.png',shape:'square',alt:'Ruby\'s quiz night poster',link:SITE+'/pages/whats-on'}),
+  B('text',{title:'Quiz night bookings are open. For you, first.',body:'You\'re on the list, so you get the booking link 48 hours before it goes on Instagram.\n\nDate, time and how many per team go here.',btnLabel:'Book your team in',btnLink:SITE+'/pages/whats-on'}),
+  B('text',{title:'',body:'Missed out? Join the waitlist on the same page and we\'ll email you if a table opens up.'}),
+  B('signoff',{line:'Sharpen your pencils.'})]};}},
+ event:{n:'Event or news',f:function(){return {subject:'Something\'s happening at Ruby\'s',pre:'',eyebrow:'Wine shop · Albion · Brisbane',blocks:[
+  B('hero',{img:CDN+'MikaylaADAMS_RubysWineShop_7.jpg',shape:'wide',alt:'Ruby\'s Wine Shop at dusk',link:SITE+'/pages/find-us'}),
+  B('event',{kicker:'Save the date',title:'What\'s happening',when:'Day, date and time',body:'Two or three lines on what it is and why they should come.',btnLabel:'Find out more',btnLink:SITE+'/pages/whats-on'}),
+  B('signoff',{})]};}},
+ gift:{n:'Christmas gift boxes',f:function(){return {subject:'Three boxes, hand-picked',pre:'Ruby Custom orders close Sunday 6 December.',eyebrow:'Christmas at Ruby\'s',blocks:[
+  B('hero',{img:CDN+'gift-boxes-banner-v2.jpg',shape:'original',alt:'Ruby\'s Christmas gift boxes',link:SITE+'/pages/gift-boxes'}),
+  B('text',{title:'Hand-picked by us, not an algorithm.',body:'Three bottles in every box from the independent winemakers we pour all year, with tasting cards, beautifully packaged and ready to give.'}),
+  B('list',{kicker:'Christmas 2026',title:'Pick the box that suits them',items:[{name:'Introduction Collection',note:'A sparkling, a white and a red. Fun and easy drinking.',price:'$160'},{name:'Explorer\'s Collection',note:'Three standout bottles you won\'t find in an average bottle shop.',price:'$260'},{name:'The Ruby Custom',note:'Three premium bottles, fully bespoke to the person. Closes 6 December.',price:'From $380'}],btnLabel:'Choose your box',btnLink:SITE+'/pages/gift-boxes'}),
+  B('text',{title:'',body:'Free pickup in Albion, or $15 delivery across Brisbane metro. Explorer\'s and Introduction close Sunday 13 December. Only available to adults 18+.'}),
+  B('signoff',{line:'Cheers to the season.'})]};}},
+ blank:{n:'Blank email',f:function(){return {subject:'',pre:'',eyebrow:'Wine shop · Albion · Brisbane',blocks:[B('text',{}),B('signoff',{})]};}}
+};
+
+var LS='rubys-studio-v1', doc=null, openId=null, w=600;
+function load(){try{var d=JSON.parse(localStorage.getItem(LS)||'null');if(d&&d.blocks){d.blocks.forEach(function(b){var n=+String(b.id).slice(1);if(n>uid)uid=n;});return d;}}catch(x){}return null;}
+function persist(){try{localStorage.setItem(LS,JSON.stringify(doc));}catch(x){}}
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\{\{/g,'&#123;&#123;').replace(/\{%/g,'&#123;%');}
+function paras(s,style){return String(s||'').trim().split(/\n\s*\n/).filter(Boolean).map(function(p,i,a){return '<p style="margin:0 0 '+(i<a.length-1?'16':'0')+'px 0;'+(style||'')+'">'+esc(p).replace(/\n/g,'<br>')+'</p>';}).join('');}
+function url(u){u=String(u||'').trim();if(!u)return '';if(!/^(https?:|mailto:)/i.test(u))u='https://'+u;return u.replace(/"/g,'%22');}
+function img(src,shape){src=String(src||'').trim();if(src.indexOf('cdn.shopify.com')>-1){src=src.replace(/[?#].*$/,'');if(shape==='wide')return src+'?width=1200&height=800&crop=center';if(shape==='square')return src+'?width=1200&height=1200&crop=center';return src+'?width=1200';}return src;}
+function A(link,inner){var u=url(link);return u?'<a href="'+u+'" target="_blank" style="text-decoration:none;color:inherit;">'+inner+'</a>':inner;}
+function btn(label,link,bg,fg){if(!label||!url(link))return '';return '<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="'+bg+'" style="background:'+bg+';border-radius:999px;"><a href="'+url(link)+'" target="_blank" style="display:inline-block;padding:15px 32px;font-family:'+SANS+';font-size:15px;font-weight:700;color:'+fg+';text-decoration:none;">'+esc(label)+'</a></td></tr></table>';}
+var PX='padding-left:48px;padding-right:48px;';
+function render(b){
+ var t=b.type;
+ if(t==='hero'){ if(!b.img)return ''; return '<tr><td style="padding:0;">'+A(b.link,'<img src="'+esc(img(b.img,b.shape))+'" width="600" alt="'+esc(b.alt)+'" style="display:block;width:100%;max-width:600px;height:auto;border:0;">')+'</td></tr>'; }
+ if(t==='text'){ var h=''; if(b.title)h+='<tr><td class="px" style="'+PX+'padding-top:40px;padding-bottom:0;"><h1 class="h1" style="margin:0;font-family:'+SERIF+';font-weight:700;font-size:36px;line-height:42px;color:'+C.wine+';">'+esc(b.title)+'</h1></td></tr>';
+  if(b.body)h+='<tr><td class="px" style="'+PX+'padding-top:'+(b.title?'18':'32')+'px;padding-bottom:0;font-family:'+SANS+';font-size:16px;line-height:26px;color:'+C.wine+';">'+paras(b.body)+'</td></tr>';
+  var bb=btn(b.btnLabel,b.btnLink,C.terra,C.cream); if(bb)h+='<tr><td class="px" align="left" style="'+PX+'padding-top:26px;">'+bb+'</td></tr>';
+  return h+'<tr><td style="padding:0 0 8px 0;font-size:0;line-height:0;">&nbsp;</td></tr>'; }
+ if(t==='list'){ var rows=(b.items||[]).filter(function(i){return i.name||i.note;}).map(function(i,n,a){var last=n===a.length-1;return '<tr><td width="52" valign="top" style="font-family:'+SERIF+';font-style:italic;font-size:30px;line-height:30px;color:'+C.terra+';padding:'+(n?'20':'2')+'px 0 20px 0;">0'+(n+1)+'</td><td valign="top" style="font-family:'+SANS+';font-size:15px;line-height:23px;color:'+C.wine+';padding:'+(n?'20':'0')+'px 0 20px 0;'+(last?'':'border-bottom:1px solid '+C.stone+';')+'"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="font-family:'+SANS+';font-size:16px;line-height:23px;font-weight:700;color:'+C.wine+';">'+esc(i.name)+'</td>'+(i.price?'<td align="right" valign="top" style="font-family:'+SERIF+';font-size:18px;font-weight:700;color:'+C.terra+';white-space:nowrap;padding-left:12px;">'+esc(i.price)+'</td>':'')+'</tr></table>'+(i.note?esc(i.note):'')+'</td></tr>';}).join('');
+  var h='<tr><td class="px" style="'+PX+'padding-top:40px;">';
+  if(b.kicker)h+='<p style="margin:0 0 6px 0;font-family:'+SANS+';font-size:11px;letter-spacing:3px;text-transform:uppercase;color:'+C.terra+';">'+esc(b.kicker)+'</p>';
+  if(b.title)h+='<h2 style="margin:0 0 20px 0;font-family:'+SERIF+';font-weight:700;font-size:28px;line-height:34px;color:'+C.wine+';">'+esc(b.title)+'</h2>';
+  h+='<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'+rows+'</table>';
+  var bb=btn(b.btnLabel,b.btnLink,C.terra,C.cream); if(bb)h+='<div style="padding-top:24px;">'+bb+'</div>';
+  return h+'<div style="height:8px;line-height:8px;font-size:0;">&nbsp;</div></td></tr>'; }
+ if(t==='event'){ var h='<tr><td style="padding:40px 0 0 0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td class="px" bgcolor="'+C.wine+'" style="background:'+C.wine+';'+PX+'padding-top:40px;padding-bottom:42px;font-family:'+SANS+';color:'+C.cream+';">';
+  if(b.kicker)h+='<p style="margin:0 0 10px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:'+C.sand+';">'+esc(b.kicker)+'</p>';
+  if(b.title)h+='<p style="margin:0 0 8px 0;font-family:'+SERIF+';font-size:32px;line-height:38px;font-weight:700;color:'+C.cream+';">'+esc(b.title)+'</p>';
+  if(b.when)h+='<p style="margin:0 0 16px 0;font-family:'+SERIF+';font-style:italic;font-size:20px;line-height:28px;color:'+C.terra+';">'+esc(b.when)+'</p>';
+  if(b.body)h+=paras(b.body,'font-size:15px;line-height:24px;color:'+C.cream+';');
+  var bb=btn(b.btnLabel,b.btnLink,C.cream,C.wine); if(bb)h+='<div style="padding-top:24px;">'+bb+'</div>';
+  return h+'</td></tr></table></td></tr>'; }
+ if(t==='split'){ return '<tr><td style="padding:40px 0 0 0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="'+C.sand+'" style="background:'+C.sand+';"><tr>'+(b.img?'<td class="col" width="260" valign="top" style="width:260px;padding:0;"><img src="'+esc(img(b.img,'square'))+'" width="260" alt="'+esc(b.title||b.kicker)+'" style="display:block;width:100%;height:auto;border:0;"></td>':'')+'<td class="col px" valign="middle" style="padding:28px 32px;font-family:'+SANS+';color:'+C.wine+';">'+(b.kicker?'<p style="margin:0 0 8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:'+C.terra+';">'+esc(b.kicker)+'</p>':'')+(b.title?'<p style="margin:0 0 12px 0;font-family:'+SERIF+';font-size:26px;line-height:31px;font-weight:700;color:'+C.wine+';">'+esc(b.title)+'</p>':'')+paras(b.body,'font-size:15px;line-height:23px;color:'+C.wine+';')+'</td></tr></table></td></tr>'; }
+ if(t==='button'){ var bb=btn(b.label,b.link,C.terra,C.cream); return bb?'<tr><td class="px" align="center" style="'+PX+'padding-top:32px;">'+bb+'</td></tr>':''; }
+ if(t==='signoff'){ return '<tr><td class="px" style="'+PX+'padding-top:40px;padding-bottom:44px;font-family:'+SERIF+';font-style:italic;font-size:20px;line-height:28px;color:'+C.wine+';">'+esc(b.line)+(b.from?'<br><span style="font-family:'+SANS+';font-style:normal;font-size:14px;color:'+C.terra+';">'+esc(b.from)+'</span>':'')+'</td></tr>'; }
+ return '';
+}
+function build(d){
+ var body=d.blocks.map(render).join('\n');
+ return '<!DOCTYPE html>\n<html lang="en-AU">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>'+esc(d.subject||'Ruby\'s Wine Shop')+'</title>\n<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Playfair:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">\n<style>\nbody{margin:0;padding:0;background:'+C.sand+';}\na{color:'+C.terra+';}\n@media (max-width:599px){.w{width:100%!important}.px{padding-left:24px!important;padding-right:24px!important}.h1{font-size:30px!important;line-height:36px!important}.col{display:block!important;width:100%!important;box-sizing:border-box!important}}\n</style>\n</head>\n<body style="margin:0;padding:0;background:'+C.sand+';">\n'
+ +(d.pre?'<div style="display:none;max-height:0;overflow:hidden;">'+esc(d.pre)+'</div>\n':'')
+ +'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:'+C.sand+';"><tr><td align="center" style="padding:24px 0;">\n<table role="presentation" class="w" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:'+C.cream+';">\n'
+ +'<tr><td align="center" style="padding:32px 40px 6px 40px;"><a href="'+SITE+'/" target="_blank"><img src="'+CDN+'rubys-logo.png?width=300" width="130" height="130" alt="Ruby\'s Wine Shop" style="display:block;width:130px;height:130px;border:0;"></a></td></tr>\n'
+ +'<tr><td align="center" style="padding:0 40px 26px 40px;font-family:'+SANS+';font-size:11px;letter-spacing:3px;text-transform:uppercase;color:'+C.wine+';">'+esc(d.eyebrow||'')+'</td></tr>\n'
+ +body
+ +'\n<tr><td align="center" style="background:'+C.sand+';padding:28px 40px;font-family:'+SANS+';font-size:12px;line-height:20px;color:'+C.wine+';">Ruby\'s Wine Shop &middot; 3/297 Sandgate Road, Albion QLD 4010<br>Mon &amp; Wed 4 to 9pm &middot; Thu 12 to 9pm &middot; Fri and Sat 12 till late &middot; Sun 12 to 8pm<br><a href="mailto:info@rubyswineshop.com.au" style="color:'+C.wine+';">info@rubyswineshop.com.au</a> &middot; <a href="https://www.instagram.com/rubys_wine_shop" target="_blank" style="color:'+C.wine+';">Instagram</a><br>You\'re getting this because you joined Ruby\'s list. <a href="{{ unsubscribe_url }}" style="color:'+C.wine+';">Unsubscribe</a></td></tr>\n'
+ +'</table>\n</td></tr></table>\n{{ open_tracking_block }}\n</body>\n</html>';
+}
+
+var ed=document.getElementById('ed'), pv=document.getElementById('pv'), sizeEl=document.getElementById('size');
+function toast(t){var e=document.getElementById('toast');e.textContent=t;e.classList.add('on');clearTimeout(e._t);e._t=setTimeout(function(){e.classList.remove('on');},2200);}
+function preview(){var h=build(doc);sizeEl.textContent=Math.ceil(new Blob([h]).size/1024)+' KB of Shopify\'s 500 KB';pv.srcdoc=h.replace(/\{\{ unsubscribe_url \}\}/g,'#').replace(/\{\{ open_tracking_block \}\}/g,'').replace('<head>','<head><base target="_blank">');persist();}
+var pt=null; function changed(){clearTimeout(pt);pt=setTimeout(preview,250);}
+
+function field(label,val,on,opt){opt=opt||{};var w=document.createElement('div');w.className='f';var id='f'+Math.random().toString(36).slice(2,8);var l=document.createElement('label');l.textContent=label;l.htmlFor=id;w.appendChild(l);var el;
+ if(opt.area){el=document.createElement('textarea');}else if(opt.options){el=document.createElement('select');opt.options.forEach(function(o){var op=document.createElement('option');op.value=o[0];op.textContent=o[1];el.appendChild(op);});}else{el=document.createElement('input');el.type='text';if(opt.list)el.setAttribute('list','links');}
+ el.id=id;el.value=val||'';if(opt.ph)el.placeholder=opt.ph;el.addEventListener(opt.options?'change':'input',function(){on(el.value);changed();});w.appendChild(el);
+ if(opt.hint){var h=document.createElement('div');h.className='hint';h.textContent=opt.hint;w.appendChild(h);}return w;}
+function picker(b,key,label){var w=document.createElement('div');w.className='f';var l=document.createElement('label');l.textContent=label||'Photo';w.appendChild(l);var g=document.createElement('div');g.className='pics';
+ PICS.forEach(function(p){var bt=document.createElement('button');bt.type='button';bt.title=p.l;bt.setAttribute('aria-label',p.l);var u=CDN+p.f;if(String(b[key]).indexOf(p.f)>-1)bt.className='on';var im=document.createElement('img');im.src=u+'?width=200&height=200&crop=center';im.alt='';bt.appendChild(im);bt.addEventListener('click',function(){b[key]=u;if(key==='img'&&!b.alt&&'alt' in b)b.alt=p.l;draw();changed();});g.appendChild(bt);});
+ w.appendChild(g);var inp=field('Or paste a photo link',String(b[key]).indexOf(CDN)===0?'':b[key],function(v){b[key]=v.trim();},{ph:'https://cdn.shopify.com/...',hint:'Upload a new photo in Shopify (Content > Files), copy its link and paste it here.'});inp.style.marginBottom='0';w.appendChild(inp);return w;}
+function btnFields(b,lk,uk){var r=document.createElement('div');r.className='row2';r.appendChild(field('Button words',b[lk],function(v){b[lk]=v;},{ph:'Leave empty for no button'}));r.appendChild(field('Button goes to',b[uk],function(v){b[uk]=v;},{list:1,ph:SITE+'/...'}));return r;}
+
+function blockBody(b,body){
+ var t=b.type,set=function(k){return function(v){b[k]=v;};};
+ if(t==='hero'){body.appendChild(picker(b,'img'));body.appendChild(field('Shape',b.shape,set('shape'),{options:[['wide','Wide (3:2)'],['square','Square'],['original','As it is']]}));body.appendChild(field('Describe the photo',b.alt,set('alt'),{hint:'Shown if images are off, and read out by screen readers.'}));body.appendChild(field('Photo links to',b.link,set('link'),{list:1}));}
+ if(t==='text'){body.appendChild(field('Heading',b.title,set('title')));body.appendChild(field('Words',b.body,set('body'),{area:1,hint:'Leave a blank line between paragraphs.'}));body.appendChild(btnFields(b,'btnLabel','btnLink'));}
+ if(t==='event'){body.appendChild(field('Small label',b.kicker,set('kicker')));body.appendChild(field('Heading',b.title,set('title')));body.appendChild(field('When',b.when,set('when'),{ph:'Wednesday 9 December, 6pm'}));body.appendChild(field('Words',b.body,set('body'),{area:1}));body.appendChild(btnFields(b,'btnLabel','btnLink'));}
+ if(t==='split'){body.appendChild(picker(b,'img'));body.appendChild(field('Small label',b.kicker,set('kicker')));body.appendChild(field('Heading',b.title,set('title')));body.appendChild(field('Words',b.body,set('body'),{area:1}));}
+ if(t==='button'){body.appendChild(btnFields(b,'label','link'));}
+ if(t==='signoff'){body.appendChild(field('Last line',b.line,set('line')));body.appendChild(field('From',b.from,set('from')));}
+ if(t==='list'){body.appendChild(field('Small label',b.kicker,set('kicker')));body.appendChild(field('Heading',b.title,set('title')));
+  b.items.forEach(function(it,i){var w=document.createElement('div');w.className='item';var x=document.createElement('button');x.type='button';x.className='ib x';x.textContent='✕';x.title='Remove';x.setAttribute('aria-label','Remove item '+(i+1));x.addEventListener('click',function(){b.items.splice(i,1);draw();changed();});w.appendChild(x);
+   w.appendChild(field('Item '+(i+1),it.name,function(v){it.name=v;},{ph:'Wine, box or dish'}));var r=document.createElement('div');r.className='row2';r.appendChild(field('One line about it',it.note,function(v){it.note=v;}));r.appendChild(field('Price (optional)',it.price,function(v){it.price=v;},{ph:'$16 a glass'}));w.appendChild(r);body.appendChild(w);});
+  var ad=document.createElement('button');ad.type='button';ad.className='btn sm ghost';ad.textContent='+ Add another';ad.style.marginBottom='10px';ad.addEventListener('click',function(){b.items.push({name:'',note:'',price:''});draw();changed();});body.appendChild(ad);body.appendChild(btnFields(b,'btnLabel','btnLink'));}
+}
+function summary(b){var s=b.title||b.label||b.line||b.alt||'';return s?' · '+(s.length>28?s.slice(0,28)+'…':s):'';}
+function draw(){
+ var top=ed.scrollTop;ed.innerHTML='';
+ var s=document.createElement('div');s.className='sec';s.textContent='Before you send';ed.appendChild(s);
+ ed.appendChild(field('Subject line',doc.subject,function(v){doc.subject=v;},{hint:'Paste this into Shopify\'s subject field.'}));
+ ed.appendChild(field('Preview text',doc.pre,function(v){doc.pre=v;},{hint:'The grey line people see under the subject in their inbox.'}));
+ ed.appendChild(field('Line under the logo',doc.eyebrow,function(v){doc.eyebrow=v;}));
+ var s2=document.createElement('div');s2.className='sec';s2.textContent='Your email, top to bottom';ed.appendChild(s2);
+ doc.blocks.forEach(function(b,i){var bl=document.createElement('div');bl.className='blk'+(openId===b.id?' open':'');var h=document.createElement('header');var tt=document.createElement('b');tt.textContent=TYPES[b.type].n;var sp=document.createElement('span');sp.textContent=summary(b);tt.appendChild(sp);h.appendChild(tt);
+  [['↑','Move up',i===0,function(){doc.blocks.splice(i-1,0,doc.blocks.splice(i,1)[0]);}],['↓','Move down',i===doc.blocks.length-1,function(){doc.blocks.splice(i+1,0,doc.blocks.splice(i,1)[0]);}],['✕','Remove',false,function(){if(confirm('Remove this '+TYPES[b.type].n.toLowerCase()+'?'))doc.blocks.splice(i,1);}]].forEach(function(a){var x=document.createElement('button');x.type='button';x.className='ib';x.textContent=a[0];x.title=a[1];x.setAttribute('aria-label',a[1]);x.disabled=a[2];x.addEventListener('click',function(e){e.stopPropagation();a[3]();draw();changed();});h.appendChild(x);});
+  h.addEventListener('click',function(){openId=openId===b.id?null:b.id;draw();});
+  var body=document.createElement('div');body.className='body';if(openId===b.id)blockBody(b,body);bl.appendChild(h);bl.appendChild(body);ed.appendChild(bl);});
+ var s3=document.createElement('div');s3.className='sec';s3.textContent='Add a section';ed.appendChild(s3);
+ var ad=document.createElement('div');ad.className='add';Object.keys(TYPES).forEach(function(k){var x=document.createElement('button');x.type='button';x.textContent='+ '+TYPES[k].n;x.addEventListener('click',function(){var nb=B(k,{});doc.blocks.splice(Math.max(0,doc.blocks.length-(doc.blocks.length&&doc.blocks[doc.blocks.length-1].type==='signoff'?1:0)),0,nb);openId=nb.id;draw();changed();});ad.appendChild(x);});ed.appendChild(ad);
+ var dl=document.createElement('datalist');dl.id='links';LINKS.forEach(function(l){var o=document.createElement('option');o.value=l[0];o.label=l[1];dl.appendChild(o);});ed.appendChild(dl);
+ ed.scrollTop=top;
+}
+
+var sel=document.getElementById('tplSel');
+var o0=document.createElement('option');o0.value='';o0.textContent='Your latest email';sel.appendChild(o0);
+Object.keys(TEMPLATES).forEach(function(k){var o=document.createElement('option');o.value=k;o.textContent=TEMPLATES[k].n;sel.appendChild(o);});
+sel.addEventListener('change',function(){var k=sel.value;if(!k)return;if(doc&&!confirm('Start a new '+TEMPLATES[k].n+'? This replaces the email you\'re working on.')){sel.value='';return;}doc=TEMPLATES[k].f();openId=null;sel.value='';draw();preview();toast(TEMPLATES[k].n+' ready');});
+
+function copyText(t){if(navigator.clipboard&&window.isSecureContext)return navigator.clipboard.writeText(t);return new Promise(function(res,rej){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy')?res():rej();}catch(e){rej(e);}a.remove();});}
+document.getElementById('copyBtn').addEventListener('click',function(){var h=build(doc);copyText(h).then(function(){toast('Copied. Paste it into Code your own in Shopify Email.');},function(){toast('Couldn\'t copy. Use Download instead.');});});
+document.getElementById('dlBtn').addEventListener('click',function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([build(doc)],{type:'text/html'}));a.download=(doc.subject||'rubys-email').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.html';a.click();setTimeout(function(){URL.revokeObjectURL(a.href);},2000);});
+[].forEach.call(document.querySelectorAll('#seg button'),function(b){b.addEventListener('click',function(){[].forEach.call(document.querySelectorAll('#seg button'),function(x){x.classList.toggle('on',x===b);});document.getElementById('frame').style.width=b.dataset.w+'px';});});
+[].forEach.call(document.querySelectorAll('.tabs button'),function(b){b.addEventListener('click',function(){document.body.dataset.tab=b.dataset.t;[].forEach.call(document.querySelectorAll('.tabs button'),function(x){x.classList.toggle('ghost',x!==b);});window.scrollTo(0,0);});});
+
+doc=load()||TEMPLATES.weekly.f();
+draw();preview();
+})();
+</script>
+</body>
+</html>
