@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ruby's Email Kit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Playfair:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@400;500;700&family=Archivo:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1B1512;--paper:#F7F4EC;--brown:#3A2E25;--off:#F1EDE2;--mute:#6B5F54;--line:#DED6C8;
 --r-wine:#470606;--r-terra:#BA5B3E;--r-cream:#F2EBD7;--r-sand:#E5D9C2;--r-stone:#B8A88A}
@@ -51,8 +51,8 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 .tent{display:flex;justify-content:center}
 .card6{width:100%;max-width:300px;aspect-ratio:105/148;background:var(--r-wine);color:var(--r-cream);border-radius:6px;padding:26px 24px;display:flex;flex-direction:column;box-shadow:0 18px 40px rgba(27,21,18,.25)}
 .card6 .eb{font-family:'DM Sans',Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--r-stone)}
-.card6 .hd{font-family:'Playfair',Georgia,serif;font-weight:700;font-size:30px;line-height:1.02;margin:10px 0 10px}
-.card6 .hd i{font-weight:400;color:var(--r-terra)}
+.card6 .hd{font-family:'Archivo','Arial Black',sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:-.04em;font-size:28px;line-height:.95;margin:10px 0 12px}
+.card6 .hd i{font-style:normal;color:var(--r-terra)}
 .card6 .bd{font-family:'DM Sans',Helvetica,Arial,sans-serif;font-size:12.5px;line-height:1.5;color:var(--r-sand)}
 .card6 .qr{margin-top:auto;display:flex;align-items:flex-end;gap:14px}
 .card6 .qr .q{background:var(--r-cream);padding:8px;border-radius:4px;width:96px;flex:none}
@@ -152,6 +152,25 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 .promise b{font-weight:600}
 @media (max-width:900px){.choices{grid-template-columns:1fr}.tgrid{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.tgrid{grid-template-columns:1fr}}
+.get{border-top:1px solid var(--line);margin-top:8px}
+.gi{display:grid;grid-template-columns:56px 1fr 1.3fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line);align-items:start}
+.gi .n{font-size:30px;font-weight:600;letter-spacing:-.03em;color:var(--brown)}
+.gi h3{margin:2px 0 0;font-size:20px;font-weight:600;letter-spacing:-.01em}
+.gi p{margin:0;font-size:15.5px;line-height:1.55;color:#3d342d}
+.gi p b{font-weight:600;color:var(--ink)}
+.see{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px;align-items:center}
+.seebox{background:var(--brown);color:var(--off);border-radius:22px;padding:30px}
+.seebox h3{margin:0 0 8px;font-size:24px;font-weight:600}
+.seebox p{margin:0 0 20px;font-size:15.5px;line-height:1.55;color:#E6DFD2}
+.seebox a{display:inline-block;background:var(--off);color:var(--brown);text-decoration:none;font-weight:600;border-radius:999px;padding:13px 22px}
+.calls{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.call{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 24px}
+.call h3{margin:0 0 8px;font-size:19px;font-weight:600}
+.call p{margin:0 0 8px;font-size:15px;line-height:1.55;color:#3d342d}
+.call details{margin-top:6px;font-size:14px;line-height:1.55;color:var(--mute)}
+.call summary{cursor:pointer;font-weight:600;color:var(--ink)}
+.later{margin-top:22px;font-size:15px;line-height:1.6;color:#CFC6B6;max-width:60ch}
+@media (max-width:900px){.gi{grid-template-columns:40px 1fr;gap:6px 14px}.gi p{grid-column:2}.see,.calls{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -159,49 +178,22 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 
 <section class="band intro"><div class="wrap">
 <p class="kick">Proposal · Ruby&#x27;s Email Kit</p>
-<h1>A bigger list, and emails you can send yourself.</h1>
-<p>Tamara, you told me you use email to tell people about your events and the bottles you love, and that you&#x27;d rather send it yourself than hand it over. You&#x27;re at 35 subscribers and you have customers in Square who aren&#x27;t on your list. This kit fixes both: it grows the list from the people who already buy from you, and gives you templates in your own brand so an email takes minutes, not an afternoon.</p>
+<h1>Promote your events and bottles. Send it yourself.</h1>
+<p>Tamara, thanks for the chat today. You told me you use email for your events and the bottles you love, and that you&#x27;d rather send it yourself. Here&#x27;s exactly what I&#x27;ll set up for that, and nothing you don&#x27;t need.</p>
 <div class="stats">
-<div class="stat"><b>7</b><span>ways onto your list, from your forms, your counter, your checkout and your regulars</span></div>
-<div class="stat"><b>4</b><span>templates in your brand: events, products, what&#x27;s on and gift boxes</span></div>
-<div class="stat"><b>20 min</b><span>to send an event email from your template, or I fix the template free</span></div>
+<div class="stat"><b>4</b><span>new ways onto your list, all running on their own</span></div>
+<div class="stat"><b>3</b><span>templates in your brand for events, products and what&#x27;s on</span></div>
+<div class="stat"><b>20 min</b><span>to send an event email from your template, or I fix it free</span></div>
 </div>
 </div></section>
 
 <section class="s"><div class="wrap">
-<div class="num">01 · Where your list comes from</div>
-<h2>Seven ways in, not one.</h2>
-<p class="lede">Most of the people who love Ruby&#x27;s never see the sign-up box on your homepage, because they&#x27;re at the bar, filling in a form or buying a box. Here&#x27;s every point where you already meet them, and what changes.</p>
-<div class="cap">
-<div class="row h"><div>Where</div><div>Today</div><div>After</div></div>
-<div class="row"><div class="src"><span class="tag big">Biggest win</span><br>Your Google Forms</div><div class="now">Quiz and event sign-ups collect emails that sit in a spreadsheet and never reach your list.</div><div class="then">An <b>&ldquo;Add me to Ruby&#x27;s emails&rdquo;</b> box on every form, with a reason to say yes: first word on events and new bottles. You choose how it&#x27;s set (see below).</div></div>
-<div class="row"><div class="src">Your regulars in Square</div><div class="now">You have their emails from purchases, but they&#x27;ve never been asked to join.</div><div class="then">Regulars (<b>3 or more visits in the past year, the last within 6 months</b>) get <b>one email from you</b>: what Ruby&#x27;s emails are, what&#x27;s coming up, and an easy way to unsubscribe. One-off buyers aren&#x27;t emailed; they&#x27;re asked at the counter instead.</div></div>
-<div class="row"><div class="src">Tables, bar and counter</div><div class="now">No way to join while someone&#x27;s sitting with a glass.</div><div class="then">A <b>QR card on every table and at the counter</b>, plus your team asking at payment. Asking is what makes it work: a card alone gets a few people a week, asking gets several times that.</div></div>
-<div class="row"><div class="src">Gift box and gift card checkout</div><div class="now">Buyers give you their email, but aren&#x27;t asked to join.</div><div class="then">Switch on <b>&ldquo;Email me with news&rdquo;</b> at your Shopify checkout. It costs nothing and catches your highest-spending customers all year.</div></div>
-<div class="row"><div class="src">Ruby Custom requests</div><div class="now">The form takes name, email and phone, with no way to opt in.</div><div class="then">One <b>opt-in box added</b> to the request form. These are people spending $380 or more, often for a whole team.</div></div>
-<div class="row"><div class="src">Inside every box</div><div class="now">The person who receives your box has no way to find you again.</div><div class="then">A <b>small card in every box</b>: &ldquo;Enjoyed this? Join Ruby&#x27;s list.&rdquo; New people you can&#x27;t reach any other way.</div></div>
-<div class="row"><div class="src">Instagram</div><div class="now">No sign-up link.</div><div class="then">Sign-up link in your bio, plus a <b>Story template</b> for when a new event or box drops.</div></div>
-</div>
-
-<div class="choices">
-<div class="choice"><div class="num">Your call 1</div><h3>How the box on your forms is set</h3>
-<p>Either way, everyone can see it and change it before they submit.</p>
-<span class="opt"><b>Unticked (my recommendation).</b> People tick it to join. Fewer sign-ups at first, but every one of them chose you, so fewer unsubscribes and spam reports.</span>
-<span class="opt"><b>Ticked, they untick if they don&#x27;t want it.</b> More sign-ups. Australia&#x27;s regulator, the ACMA, advises against pre-ticked boxes, so this is your decision and I&#x27;ll set it up as you choose.</span></div>
-<div class="choice"><div class="num">Your call 2</div><h3>Who in Square gets that first email</h3>
-<p><b>My recommendation: three or more separate visits in the past 12 months, with the most recent in the last 6 months.</b></p>
-<p>There&#x27;s no legal number. The Spam Act lets you email people you have a genuine, ongoing relationship with, and the ACMA says a one-off purchase isn&#x27;t enough. So we choose a line you can stand behind:</p>
-<span class="opt"><b>One visit</b> is a one-off purchase, which the ACMA rules out. These customers are asked at the counter and through a link on your receipts instead.</span>
-<span class="opt"><b>Three or more</b> is a pattern. It&#x27;s someone who chooses Ruby&#x27;s.</span>
-<span class="opt"><b>A visit in the last 6 months</b> keeps it current. Someone who came three times in 2024 and never again isn&#x27;t an ongoing relationship.</span>
-<p style="margin:12px 0 6px"><b>Two rules that come with it:</b></p>
-<span class="opt">We only email them about what they already buy from you: wine, the bar and events at Ruby&#x27;s. That relevance is part of what makes it hold up.</span>
-<span class="opt">Anyone who unsubscribes is removed straight away and never added back.</span>
-<p style="margin:10px 0 0;font-size:13px;color:var(--mute)">Square&#x27;s customer directory shows each customer&#x27;s visits and last visit, so the list takes minutes to pull. I&#x27;m not a lawyer. This follows the ACMA&#x27;s published guidance; check with your own adviser if you&#x27;d like certainty.</p></div>
-</div>
-
-<div class="mocks">
-<div class="mock">
+<div class="num">01 · What you get</div>
+<h2>Five things. That&#x27;s it.</h2>
+<div class="get"><div class="gi"><div class="n">01</div><h3>Your list, growing on its own</h3><p><b>Four sign-up spots</b>, set up and switched on: a tick box on your Google Forms, the opt-in at your Shopify checkout, a QR card at the counter, and a small card in every gift box for the person who receives it.</p></div><div class="gi"><div class="n">02</div><h3>One email to your Square regulars</h3><p>A short note from you to customers who come in often, telling them about your new email and making it easy to say no thanks. It grows your list from day one.</p></div><div class="gi"><div class="n">03</div><h3>A welcome email that sends itself</h3><p>Everyone who joins gets it straight away: the Ruby&#x27;s story, what they&#x27;ll hear about, Ruby herself and how to visit.</p></div><div class="gi"><div class="n">04</div><h3>Three templates in your brand</h3><p><b>Event</b>, <b>Product</b> and <b>What&#x27;s on</b>, built in Shopify Email in your colours, fonts and photos. You fill in the words, a photo and a date. I show you how in a 30-minute handover, recorded so you can watch it again.</p></div><div class="gi"><div class="n">05</div><h3>Your two Christmas emails</h3><p>I write them, you send them from your templates: one before Ruby Custom orders close on 6 December, and a last call before the 13th. Your first sends are real ones that sell boxes.</p></div></div>
+<div class="see">
+<div class="seebox"><h3>See every email</h3><p>Your welcome email, the note to your regulars, your three templates and your two Christmas emails, built from your own photos. Scroll inside each phone to see the whole email.</p><a href="../kit/" target="_blank" rel="noopener">See your 7 emails</a></div>
+<div class="mocks" style="grid-template-columns:1fr;margin-top:0"><div class="mock">
 <p class="cap-t">The table card</p>
 <p class="cap-d">A6, printed on card, in your colours and fonts. Sits beside the snack menu.</p>
 <div class="tent"><div class="card6">
@@ -212,108 +204,68 @@ h2{margin:8px 0 12px;font-size:clamp(28px,3.6vw,46px);line-height:1.02;letter-sp
 </div><small>Scan to join.<br>Unsubscribe anytime.</small></div>
 </div></div>
 </div>
-<div class="mock">
-<p class="cap-t">The &ldquo;What&#x27;s on&rdquo; template</p>
-<p class="cap-d">Same blocks every week. You swap in the pours and the dates, and it&#x27;s ready to send.</p>
-<div class="phone"><div class="screen">
-<div class="top"><div class="eb">Ruby&#x27;s Weekly</div><div class="hd">Open this week</div></div>
-<div class="mod"><div class="l">By the glass</div><div class="t">Three pours to try</div><div class="slot"></div><div class="slot s"></div></div>
-<div class="mod"><div class="l">What&#x27;s on</div><div class="t">Your next event</div><div class="slot s"></div><span class="pill">Find out more</span></div>
-<div class="mod"><div class="l">On the shelf</div><div class="t">New arrival</div><div class="slot"></div><div class="slot s"></div></div>
-<div class="mod"><div class="l">From Ruby</div><div class="t">One photo, one line</div><div class="slot s"></div></div>
-<div class="ft">3/297 Sandgate Road, Albion · Unsubscribe</div>
-</div></div>
 </div>
 </div>
 </div></section>
 
 <section class="s"><div class="wrap">
-<div class="num">02 · The emails that run on their own</div>
-<h2>Three automations, set up once.</h2>
-<p class="lede">These send themselves when someone joins or buys, using the automations already built into Shopify. You never have to remember them.</p>
-<div class="flows">
-<div class="flow"><h3>Welcome</h3><p class="why">Every new subscriber, from any of the seven places, hears from you straight away while Ruby&#x27;s is fresh in their mind.</p>
-<div class="steps">
-<div class="step"><div class="when">Straight away</div><div class="what"><b>Welcome to the neighbourhood</b>What they&#x27;ll get from you, how to visit, and the story of Ruby&#x27;s. <a href="https://rubys-wine-shop.theserviceedit.com/?qa=1" target="_blank" rel="noopener">See it</a></div></div>
-<div class="step"><div class="when">3 days later</div><div class="what"><b>Take a bottle home</b>The shelf, your gift boxes and gift cards for the friend who&#x27;d love it here.</div></div>
-</div></div>
-<div class="flow"><h3>Gift box reminder</h3><p class="why">Someone starts ordering a box, then gets distracted. This brings them back to finish it.</p>
-<div class="steps">
-<div class="step"><div class="when">A few hours later</div><div class="what"><b>Still deciding?</b>Their box, the order cut-off and a link straight back to checkout.</div></div>
-</div></div>
-<div class="flow"><h3>After they buy</h3><p class="why">Your box customers are your best customers. This makes sure they come back.</p>
-<div class="steps">
-<div class="step"><div class="when">After ordering</div><div class="what"><b>Thank you</b>Pickup or delivery details, and that boxes are ready from Wednesday 2 December.</div></div>
-<div class="step"><div class="when">Mid January</div><div class="what"><b>Come in for a glass</b>For buyers who joined at checkout: an invitation to come and taste what&#x27;s open now.</div></div>
-</div></div>
+<div class="num">02 · Two quick calls for you</div>
+<h2>Tell me these and I&#x27;ll set it up.</h2>
+<div class="calls">
+<div class="call"><h3>The tick box on your forms</h3><p><b>Unticked (my recommendation):</b> people tick it to join, so every subscriber chose you. <b>Or ticked:</b> they untick it if they don&#x27;t want it. More sign-ups, but the ACMA (Australia&#x27;s regulator) advises against it, so it&#x27;s your call.</p></div>
+<div class="call"><h3>Who counts as a regular</h3><p><b>My recommendation:</b> three or more visits in the past year, the last within six months. One-off buyers aren&#x27;t emailed; they&#x27;re asked at the counter instead.</p>
+<details><summary>Why this line</summary>The Spam Act lets you email people you have a genuine, ongoing relationship with, about what they already buy from you. The ACMA says a single purchase isn&#x27;t enough. Anyone who unsubscribes is removed straight away. I&#x27;m not a lawyer; this follows the ACMA&#x27;s published guidance.</details></div>
 </div>
-</div></section>
-
-<section class="s"><div class="wrap">
-<div class="num">03 · Your templates</div>
-<h2>Four templates. You fill in the blanks.</h2>
-<p class="lede">Built in Shopify Email, in your colours, fonts and photos. The design is done, so each email is just your words, a photo and a date. I show you how in a 30-minute handover, recorded so you can watch it again.</p>
-<div class="tgrid">
-<div class="d"><h3>Event</h3><p>One event, one photo, one button. Quiz nights, tastings, producer nights, anything on the calendar.</p></div>
-<div class="d"><h3>Product spotlight</h3><p>One bottle or one box you love, why you love it, and where to get it.</p></div>
-<div class="d"><h3>What&#x27;s on</h3><p>The weekly or fortnightly round-up: what&#x27;s pouring, what&#x27;s on, one thing to take home.</p></div>
-<div class="d"><h3>Gift box drop</h3><p>New boxes, prices and cut-off dates, built for Christmas and every gifting moment after it.</p></div>
-</div>
-<p class="note">If you send from Square rather than Shopify, I build the templates there instead.</p>
 </div></section>
 
 <section class="band price"><div class="wrap">
-<div class="num" style="color:#BFB4A3">04 · The investment</div>
-<h2>One kit. Yours to keep.</h2>
+<div class="num" style="color:#BFB4A3">03 · The investment</div>
+<h2>One price. Yours to keep.</h2>
 <div class="pgrid">
 <div class="pcard">
 <div class="pn">Ruby&#x27;s Email Kit</div>
 <div class="amt">$750 <small>+ GST, one-off</small></div>
 <p class="split">Paid in two halves: $375 to start, and $375 at the handover.</p>
-<p class="split" style="margin-top:-8px"><a href="../kit/" style="color:var(--ink);font-weight:600">See all twelve emails in your kit</a></p>
 <ul>
-<li>Seven ways onto your list, set up and switched on</li>
-<li>Opt-in on your Google Forms, checkout and Ruby Custom form</li>
-<li>The first email to your Square regulars, written for you</li>
-<li>Table card, counter card, box insert and Story template, print-ready</li>
-<li>Three automations, five emails</li>
-<li>Four templates in your brand</li>
-<li>Your two Christmas gift box emails, written by me and sent by you from your templates</li>
-<li>30-minute recorded handover and a January list report</li>
+<li>Four sign-up spots, set up and switched on</li>
+<li>The counter card and gift box card, print-ready</li>
+<li>One email to your Square regulars, written for you</li>
+<li>A welcome email that sends itself</li>
+<li>Three templates in your brand</li>
+<li>Your two Christmas emails, written for you</li>
+<li>30-minute recorded handover</li>
 </ul>
 </div>
 <div class="after">
 <h3>My promise.</h3>
-<p>If you can&#x27;t put together and send an event email from your template in under 20 minutes after the handover, I&#x27;ll fix the template free until you can.</p>
+<p>If you can&#x27;t send an event email from your template in under 20 minutes after the handover, I&#x27;ll fix the template free until you can.</p>
 <h3>After that, it&#x27;s yours.</h3>
-<p>You send when you want. The automations keep running on their own. There&#x27;s no monthly fee and nothing to keep paying for.</p>
-<p>When your list gets to around 500 people, it&#x27;s worth more than the odd email from a busy owner. That&#x27;s when we can talk about my monthly service. No pressure and no lock-in.</p>
-<p class="fine">Built on Shopify Email, which is already part of your store; most plans include the first 10,000 emails a month. Not included: printing the cards, and any Shopify or Square fees beyond your current plans. I&#x27;ll only ever ask for collaborator access, never your password.</p>
+<p>No monthly fee and nothing to keep paying for. The sign-ups and the welcome email keep working on their own.</p>
+<p class="later">Later, if you want it: once your list is around 500 people, I can run it for you each month, with extra automations like gift box reminders and a thank-you after every order. No pressure.</p>
+<p class="fine">Not included: printing the cards, and any Shopify fees beyond your current plan. I&#x27;ll only ever ask for collaborator access, never your password.</p>
 </div>
 </div>
 </div></section>
 
 <section class="s"><div class="wrap">
-<div class="num">05 · Timeline</div>
+<div class="num">04 · Timeline</div>
 <h2>Live before the Christmas rush.</h2>
-<p class="lede">Start next week and the list is growing through your busiest weeks of the year.</p>
 <div class="tl">
-<div class="ti"><div class="dt">Week 1 · from Mon 9 Nov</div><div class="tx">Opt-ins on your Google Forms, checkout and Ruby Custom form. Cards ready to print. Welcome emails running.</div></div>
-<div class="ti"><div class="dt">Week 2 · by Mon 16 Nov</div><div class="tx">Gift box and after-purchase emails running. Your four templates ready, and the handover. The first email goes to your Square regulars.</div></div>
-<div class="ti"><div class="dt">Thu 19 Nov</div><div class="tx">Christmas gift box email goes out from your template, well before Ruby Custom orders close on 6 December.</div></div>
-<div class="ti"><div class="dt">Thu 10 Dec</div><div class="tx">Last orders email for the Explorer&#x27;s and Introduction boxes, which close on Sunday 13 December.</div></div>
-<div class="ti"><div class="dt">Late January</div><div class="tx">One-page list report: how many people joined, and from where.</div></div>
+<div class="ti"><div class="dt">Week of Mon 9 Nov</div><div class="tx">Sign-up spots switched on, cards ready to print, welcome email running.</div></div>
+<div class="ti"><div class="dt">By Mon 16 Nov</div><div class="tx">Your three templates ready and your handover. The note goes to your regulars.</div></div>
+<div class="ti"><div class="dt">Thu 19 Nov</div><div class="tx">Christmas email goes out, well before Ruby Custom orders close on 6 December.</div></div>
+<div class="ti"><div class="dt">Thu 10 Dec</div><div class="tx">Last call for the Explorer&#x27;s and Introduction boxes, which close on Sunday 13 December.</div></div>
 </div>
 </div></section>
 
 <section class="s close"><div class="wrap">
-<div class="num">06 · Next step</div>
+<div class="num">05 · Next step</div>
 <h2>What I need from you.</h2>
 <div class="need">
-<div><b>Store access</b>Accept a Shopify collaborator request, so I can work in your store without your login.</div>
-<div><b>Your two calls</b>How the form box is set, and that you&#x27;re happy with the rule for your Square regulars.</div>
-<div><b>Your events</b>What&#x27;s coming up, so your first emails have something to say.</div>
-<div><b>Your photos</b>OK to use the photos on your site and Instagram, or a few new ones.</div>
+<div><b>Your yes</b>Reply to my email and I&#x27;ll send the first invoice.</div>
+<div><b>Store access</b>Accept a Shopify collaborator request, so I can work without your login.</div>
+<div><b>Your forms</b>Add me as an editor on your Google Forms.</div>
+<div><b>Your two calls</b>The tick box setting, and that you&#x27;re happy with the regulars rule.</div>
 </div>
 <a class="cta" href="mailto:hello@theserviceedit.com?subject=Ruby%27s%20Email%20Kit%3A%20let%27s%20go">Let&#x27;s go</a>
 <p class="sig">I spent over 20 years in hospitality and owned my own cafés for close to a decade. I know how hard it is to win a regular, and how easy it is to lose touch with one. This is the system I&#x27;d want in my own venue.<br><br>Mel Cox · The Service Edit · hello@theserviceedit.com · theserviceedit.com</p>
