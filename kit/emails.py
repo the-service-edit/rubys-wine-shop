@@ -8,9 +8,9 @@ SITE = 'https://rubyswineshop.com.au'
 W = SITE + '/pages/whats-on'; F = SITE + '/pages/find-us'; G = SITE + '/pages/gift-boxes'; M = SITE + '/collections/merch'; GC = SITE + '/pages/gift-cards'
 WINE, TERRA, CREAM, SAND = '#470606', '#BA5B3E', '#F2EBD7', '#E5D9C2'
 SANS = "'DM Sans',Helvetica,Arial,sans-serif"
-FAT = "'Fraunces','Cooper Black',Georgia,serif"  # closest free match to her poster lettering
-FATV = "font-variation-settings:'SOFT' 100,'WONK' 0,'opsz' 144;font-weight:900;"
-FONTS = 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&display=swap'
+FAT = "'Archivo','Arial Black','Helvetica Neue',Arial,sans-serif"  # closest free match to her Swiss Wine Night poster type
+FATV = "font-weight:900;text-transform:uppercase;font-stretch:100%;"
+FONTS = 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Archivo:wdth,wght@62..125,100..900&display=swap'
 
 def img(src, alt, w=600, link=None, style=''):
     t = f'<img src="{src}" width="{w}" alt="{H.escape(alt)}" style="display:block;width:100%;max-width:{w}px;height:auto;border:0;{style}">'
@@ -25,14 +25,15 @@ def btn(label, url, bg, fg, align='left'):
 def p(t, c, size=16, lh=26, align='left', mb=0, w=400):
     return f'<p style="margin:0 0 {mb}px 0;font-family:{SANS};font-size:{size}px;line-height:{lh}px;font-weight:{w};color:{c};text-align:{align};">{t}</p>'
 def lab(t, c, align='left', mb=12):
-    return f'<p style="margin:0 0 {mb}px 0;font-family:{SANS};font-size:12px;line-height:18px;letter-spacing:3px;text-transform:uppercase;font-weight:700;color:{c};text-align:{align};">{t}</p>'
+    return f'<p style="margin:0 0 {mb}px 0;font-family:{FAT};font-size:13px;line-height:18px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;color:{c};text-align:{align};">{t}</p>'
 def fat(t, c, size, cls='mid', align='left', mb=0, lh=None):
-    lh = lh or round(size * 0.98)
-    return f'<h1 class="{cls}" style="margin:0 0 {mb}px 0;font-family:{FAT};{FATV}font-size:{size}px;line-height:{lh}px;letter-spacing:-1px;color:{c};text-align:{align};">{t}</h1>'
+    size = round(size * SCALE.get(cls, 0.8)); lh = round(size * 0.94)
+    return f'<h1 class="{cls}" style="margin:0 0 {mb}px 0;font-family:{FAT};{FATV}font-size:{size}px;line-height:{lh}px;letter-spacing:-0.04em;color:{c};text-align:{align};">{t}</h1>'
+SCALE = {'lng': 0.68, 'mega': 0.8, 'huge': 0.8, 'mid': 0.82, 'sm': 0.82}
 def dot(big, small, bg, fg, sub, size=136, bsz=30, align='center'):
     a = ' align="center" style="margin:0 auto;"' if align == 'center' else ''
     return (f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"{a}><tr><td class="dot" width="{size}" height="{size}" align="center" valign="middle" bgcolor="{bg}" style="width:{size}px;height:{size}px;background:{bg};border-radius:50%;">'
-            f'<p style="margin:0;font-family:{FAT};{FATV}font-size:{bsz}px;line-height:{bsz}px;color:{fg};">{big}</p><p style="margin:3px 0 0 0;font-family:{SANS};font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:{sub};">{small}</p></td></tr></table>')
+            f'<p style="margin:0;font-family:{FAT};{FATV}font-size:{round(bsz*0.82)}px;line-height:{round(bsz*0.9)}px;letter-spacing:-0.02em;color:{fg};">{big}</p><p style="margin:3px 0 0 0;font-family:{SANS};font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:{sub};">{small}</p></td></tr></table>')
 def two(a, b, wa=50, gap=20, stack=True, va='middle'):
     ca = 'col colpad' if stack else 'keep'; cb = 'col' if stack else 'keep'
     return (f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>'
@@ -59,7 +60,7 @@ def shell(title, pre, rows):
 <style>
 body{{margin:0;padding:0;background:{SAND};}}
 a{{color:{TERRA};}}
-@media (max-width:599px){{.w{{width:100%!important}}.px{{padding-left:22px!important;padding-right:22px!important}}.mega{{font-size:44px!important;line-height:44px!important}}.huge{{font-size:38px!important;line-height:39px!important}}.mid{{font-size:30px!important;line-height:32px!important}}.sm{{font-size:22px!important;line-height:25px!important}}.col{{display:block!important;width:100%!important;box-sizing:border-box!important;padding-left:0!important;padding-right:0!important}}.colpad{{padding-bottom:18px!important}}.col img,.keep img{{width:100%!important;max-width:100%!important}}.keep{{padding-left:3px!important;padding-right:3px!important}}.dot{{width:84px!important;height:84px!important}}.dot p:first-child{{font-size:20px!important;line-height:20px!important}}}}
+@media (max-width:599px){{.w{{width:100%!important}}.px{{padding-left:22px!important;padding-right:22px!important}}.mega{{font-size:31px!important;line-height:30px!important}}.lng{{font-size:22px!important;line-height:22px!important}}.huge{{font-size:27px!important;line-height:26px!important}}.mid{{font-size:25px!important;line-height:25px!important}}.sm{{font-size:18px!important;line-height:19px!important}}.col{{display:block!important;width:100%!important;box-sizing:border-box!important;padding-left:0!important;padding-right:0!important}}.colpad{{padding-bottom:18px!important}}.col img,.keep img{{width:100%!important;max-width:100%!important}}.keep{{padding-left:3px!important;padding-right:3px!important}}.dot{{width:84px!important;height:84px!important}}.dot p:first-child{{font-size:17px!important;line-height:18px!important}}}}
 </style></head>
 <body style="margin:0;padding:0;background:{SAND};">
 <div style="display:none;max-height:0;overflow:hidden;">{pre}</div>
@@ -226,6 +227,70 @@ add('regulars', 'square', 'Your Square regulars · Sent once', 'A note from Tama
   row(fat('Not for you?<br>No worries.', WINE, 38, 'mid', 'left', 10, 40) + p('Tap unsubscribe at the bottom of this email and you won&#x27;t hear from us again. No hard feelings, and we&#x27;ll still save you a seat.', WINE, 16, 25), SAND, '30px 44px 34px 44px'),
   edge('sand', 'cream'),
   bye('See you at the bar.', 'Tamara and the Ruby&#x27;s crew (and Ruby)')])
+
+RUBY = CDN + '4x3_MikaylaADAMS_RubysWineShop_11.jpg?width=1200&height=1200&crop=center'
+BAR = CDN + '4x3_MikaylaADAMS_RubysWineShop_8.jpg?width=1200&height=800&crop=center'
+P_INTRO = SITE + '/products/christmas-gift-box?variant=67604206616796'
+P_EXPL = SITE + '/products/christmas-gift-box?variant=67604206649564'
+
+# 10. WELCOME 1
+add('welcome1', 'flows', 'Welcome · Email 1 · Straight away', 'Welcome to the neighbourhood',
+ "The first email every new subscriber gets: the Swiss story behind Ruby's, what lands in their inbox, Ruby herself, and how to visit.",
+ "Welcome to Ruby's", "You're on the list. Here's what you've signed up for.", [
+  edge('cream', 'terra'),
+  row('<div style="text-align:center;">' + lab('You&#x27;re on the list', CREAM, 'center', 14) + fat('Welcome to the<br>neighbourhood.', CREAM, 66, 'lng', 'center', 18)
+      + p('Ruby&#x27;s was inspired by a childhood spent in a small Swiss town, where sharing a bottle is never just about the wine. It&#x27;s how friends become family. We brought a little of that spirit to Albion, and now you&#x27;re part of it.', CREAM, 17, 27, 'center') + '</div>', TERRA, '30px 48px 42px 48px'),
+  edge('terra', 'cream'),
+  row(img(BAR, 'A busy night at the bar at Ruby&#x27;s', 600, F, 'border-radius:26px;'), CREAM, '26px 24px 6px 24px'),
+  row(fat('What lands in<br>your inbox.', WINE, 52, 'huge', 'left', 8) + table([
+    day('01', 'weekly', TERRA, CREAM, CREAM, 'What&#x27;s pouring', '8 to 10 rotating pours by the glass. Know what&#x27;s open before you walk in.', WINE),
+    day('02', 'events', WINE, CREAM, SAND, 'What&#x27;s on', 'Quiz night with The Weekly Fifty, Milk Bar Thursdays and meet the maker nights.', WINE),
+    day('03', 'the shelf', TERRA, CREAM, CREAM, 'New arrivals', 'Hard-to-find Swiss drops, skin-contact Georgian beauties and the best of our QLD backyard.', WINE, True)])
+      + SP(18) + btn('See what&#x27;s on', W, WINE, CREAM), CREAM, '26px 40px 38px 40px'),
+  edge('cream', 'wine'),
+  row(two(img(RUBY, 'Ruby the border collie under a chair at the bar', 260, SITE + '/pages/about', 'border-radius:50%;'),
+          lab('Meet the boss', SAND, 'left', 10) + fat('This is<br>Ruby.', CREAM, 60, 'huge', 'left', 12) + p('Our founder&#x27;s border collie, and the reason the bar has a name. She greets every visitor like an old friend and firmly believes the world revolves around her. She is usually right.', SAND, 15.5, 25), 46, 24), WINE, '34px 44px 40px 44px'),
+  edge('wine', 'sand'),
+  hours(SAND),
+  edge('sand', 'cream'),
+  bye('No pretension. Just great wine and good people.')])
+
+# 11. CHRISTMAS (written by Mel, sent by Tamara)
+add('christmas', 'christmas', 'Christmas · Thu 19 Nov', 'Three boxes, hand-picked',
+ 'Your three boxes, prices and the 6 and 13 December cut-offs, plus a line for corporate buyers, sent well before Ruby Custom orders close.',
+ "Christmas gift boxes at Ruby's", 'Three boxes, hand-picked by us. The Ruby Custom closes Sunday 6 December.', [
+  row(img(IMG + 'giftboxes-sq.jpg', 'Wine Gifts Reimagined: Ruby&#x27;s Christmas gift boxes', 600, G, 'border-radius:26px;'), CREAM, '0 24px 0 24px'),
+  row('<div style="text-align:center;">' + lab('Christmas 2026', TERRA, 'center', 12) + fat('Hand-picked<br>by us, not an<br>algorithm.', WINE, 64, 'mega', 'center', 16)
+      + p('Three bottles in every box, chosen from the independent winemakers we pour all year. Tasting cards included, beautifully packaged and ready to give.', WINE, 17, 27, 'center') + '</div>', CREAM, '30px 48px 30px 48px'),
+  row(three([dot('6 Dec', 'Custom closes', WINE, CREAM, SAND, 140, 30), dot('13 Dec', 'The rest close', TERRA, CREAM, CREAM, 140, 30), dot('2 Dec', 'Ready from', SAND, WINE, TERRA, 140, 30)], 8), CREAM, '0 30px 34px 30px'),
+  edge('cream', 'wine'),
+  row('<div style="text-align:center;">' + lab('Limited · closes first', SAND, 'center', 10) + fat('The Ruby<br>Custom.', CREAM, 66, 'mega', 'center', 10) + fat('From $380', TERRA, 40, 'mid', 'center', 16)
+      + p('Three premium bottles, fully bespoke. Tell us about the lucky recipient: their tastes, travels and the wines they&#x27;ve loved. We&#x27;ll build something made entirely for them, with a personal note and tasting cards.', SAND, 16, 26, 'center', 24) + btn('Request a custom box', G + '#ruby-custom', CREAM, WINE, 'center') + '</div>', WINE, '30px 48px 40px 48px'),
+  edge('wine', 'cream'),
+  row(two(f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{TERRA}" style="background:{TERRA};border-radius:24px;"><tr><td style="padding:24px 22px;">' + fat('$260', CREAM, 46, 'mid', 'left', 6) + fat('Explorer&#x27;s', CREAM, 26, 'sm', 'left', 8) + p('Three standout bottles you won&#x27;t find in an average bottle shop, with a personal note.', CREAM, 14.5, 22, 'left', 16) + btn('Order', P_EXPL, WINE, CREAM) + '</td></tr></table>',
+          f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="{SAND}" style="background:{SAND};border-radius:24px;"><tr><td style="padding:24px 22px;">' + fat('$160', WINE, 46, 'mid', 'left', 6) + fat('Introduction', WINE, 26, 'sm', 'left', 8) + p('A sparkling, a white and a red. Fun, easy drinking from producers we love.', WINE, 14.5, 22, 'left', 16) + btn('Order', P_INTRO, WINE, CREAM) + '</td></tr></table>', 50, 16, True, 'top'), CREAM, '30px 32px 34px 32px'),
+  edge('cream', 'terra'),
+  row(fat('Buying for<br>the team?', CREAM, 52, 'huge', 'left', 12) + p('The custom form takes your company name, and orders over $800 (minimum 5 boxes) get free Brisbane delivery. Free pickup in Albion, $15 delivery across Brisbane metro.', CREAM, 16, 26, 'left', 22) + btn('Choose your boxes', G, WINE, CREAM) + SP(16) + p('Only available to adults 18+. ID may be checked on pickup or delivery.', CREAM, 13, 20), TERRA, '30px 44px 38px 44px'),
+  edge('terra', 'cream'),
+  bye('Cheers to the season.')])
+
+# 12. LAST ORDERS
+add('lastorders', 'christmas', 'Last orders · Thu 10 Dec', 'Boxes close Sunday 13 Dec',
+ 'The final call before the cut-off: a big date, the two boxes still open, and gift cards as the fallback for late shoppers.',
+ "Last orders at Ruby's", "Explorer's and Introduction boxes close Sunday. After that, there's always a gift card.", [
+  edge('cream', 'wine'),
+  row('<div style="text-align:center;">' + lab('Last orders', SAND, 'center', 18) + dot('Sun 13', 'December', TERRA, CREAM, CREAM, 190, 46) + SP(22) + fat('Boxes close<br>Sunday.', CREAM, 76, 'lng', 'center', 14).replace('class="mega"', 'class="huge"')
+      + p('Order by Sunday and we&#x27;ll have yours packed with tasting cards, ready for pickup or Brisbane delivery.', SAND, 17, 27, 'center') + '</div>', WINE, '30px 48px 40px 48px'),
+  edge('wine', 'cream'),
+  row(table([
+    f'<tr><td class="keep" valign="middle" style="padding:20px 0;border-bottom:2px dashed {TERRA};">{fat("Introduction", WINE, 28, "sm", "left", 4)}{p("A sparkling, a white and a red.", WINE, 15, 23)}</td><td class="keep" align="right" valign="middle" width="96" style="width:96px;padding:20px 0;border-bottom:2px dashed {TERRA};"><a href="{P_INTRO}" target="_blank" style="text-decoration:none;">{fat("$160", TERRA, 40, "mid", "right", 2)}{lab("Order", TERRA, "right", 0)}</a></td></tr>',
+    f'<tr><td class="keep" valign="middle" style="padding:20px 0;">{fat("Explorer&#x27;s", WINE, 30, "sm", "left", 4)}{p("Bottles you won&#x27;t find in an average bottle shop, plus a personal note.", WINE, 15, 23)}</td><td class="keep" align="right" valign="middle" width="96" style="width:96px;padding:20px 0;"><a href="{P_EXPL}" target="_blank" style="text-decoration:none;">{fat("$260", WINE, 40, "mid", "right", 2)}{lab("Order", WINE, "right", 0)}</a></td></tr>'])
+      + SP(10) + p('Free pickup in Albion, $15 delivery across Brisbane metro. 18+ only.', WINE, 14, 21), CREAM, '22px 44px 32px 44px'),
+  edge('cream', 'terra'),
+  row(two(fat('Missed<br>the cut-off?', CREAM, 52, 'huge', 'left', 12) + p('Give them a seat at the bar instead. A Ruby&#x27;s gift card works for take-away bottles and drinks in-store, and we email it straight to them.', CREAM, 16, 26, 'left', 20) + btn('Buy a gift card', GC, WINE, CREAM),
+          img(IMG + 'cheers-sq.jpg', 'Two glasses clinking against the sky', 250, GC, 'border-radius:50%;'), 56, 22), TERRA, '32px 44px 38px 44px'),
+  edge('terra', 'cream'),
+  bye('Cheers to the season.')])
 
 os.makedirs(os.path.join(HERE, 'emails'), exist_ok=True)
 man = {}

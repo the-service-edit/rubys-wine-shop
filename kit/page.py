@@ -18,12 +18,10 @@ sections = [
  ('01 · Your templates', 'Four templates. You fill in the blanks.', "Each one is shown with something you've actually run or sell: Meet the Maker, your Pet Nat, the Milk Bar and your gift boxes. Next time you swap in the new photo, date and two lines, and the design stays put.",
   [mine('event'), mine('spotlight'), mine('whatson'), mine('giftdrop')]),
  ('02 · The emails that run on their own', 'Five emails, set up once.', 'These send themselves when someone joins or buys. You never have to remember them.',
-  [old('The welcome', 'Welcome · Email 1 · Straight away', 'Welcome to the neighbourhood', "The first email every new subscriber gets: what you pour, what's on, how to visit, and Ruby herself."),
-   mine('welcome2'), mine('reminder'), mine('thanks'), mine('glass')]),
+  [mine('welcome1'), mine('welcome2'), mine('reminder'), mine('thanks'), mine('glass')]),
  ('03 · Your Square regulars', 'One email, sent once.', "For customers with 3 or more visits in the past year, the last within 6 months. It says who it's from and what they'll get, and makes leaving easy.", [mine('regulars')]),
- ('04 · Your Christmas emails', 'Written by me, sent by you.', 'Your first two sends are real ones, built around your actual cut-offs, so you learn on emails that sell boxes.',
-  [old('Christmas', 'Christmas · Thu 19 Nov', 'Three boxes, hand-picked', 'Your three boxes, prices and the 6 and 13 December cut-offs, sent well before Ruby Custom orders close.'),
-   old('Last orders', 'Last orders · Thu 10 Dec', 'Boxes close Sunday 13 Dec', 'The final call before the cut-off, with gift cards as the fallback for late shoppers.')]),
+ ('04 · Your Christmas emails', 'Written by me, sent by you.', 'Your first two sends are real ones, built around your actual cut-offs. I write them, you send them from your templates, so you learn on emails that sell boxes.',
+  [mine('christmas'), mine('lastorders')]),
 ]
 body = ''.join(f'<section class="s"><div class="wrap"><div class="num">{n}</div><h2>{h}</h2><p class="lede">{html.escape(l)}</p><div class="grid">{"".join(c)}</div></div></section>\n' for n, h, l, c in sections)
 tpl = open(os.path.join(HERE, 'shell.html')).read()
