@@ -34,12 +34,13 @@ def btn(label, url, bg=WINE, fg=CREAM, align='left'):
     a = ' align="center" style="margin:0 auto;"' if align == 'center' else ''
     return f'<table role="presentation" cellpadding="0" cellspacing="0" border="0"{a}><tr><td bgcolor="{bg}" style="background:{bg};border-radius:999px;"><a href="{url}" target="_blank" style="display:inline-block;padding:15px 30px;font-family:{SANS};font-size:15px;font-weight:700;color:{fg};text-decoration:none;">{e(label)}</a></td></tr></table>'
 
-def cols(cells, gap=16):
-    """cells: list of (width_pct, html). Stacks on mobile."""
+def cols(cells, gap=16, stack=True):
+    """cells: list of (width_pct, html). Stacks on mobile unless stack=False (photo rows stay side by side)."""
     n = len(cells); tds = []
     for i, (w, inner) in enumerate(cells):
         pl = 0 if i == 0 else gap // 2; pr = 0 if i == n - 1 else gap // 2
-        tds.append(f'<td class="col{" colpad" if i < n-1 else ""}" width="{w}%" valign="top" style="width:{w}%;padding:0 {pr}px 0 {pl}px;">{inner}</td>')
+        cls = ('col' + (' colpad' if i < n-1 else '')) if stack else 'keep'
+        tds.append(f'<td class="{cls}" width="{w}%" valign="top" style="width:{w}%;padding:0 {pr}px 0 {pl}px;">{inner}</td>')
     return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>' + ''.join(tds) + '</tr></table>'
 
 def ticket(rows, bg=CREAM, ink=WINE, rule=TERRA):
@@ -77,7 +78,7 @@ def shell(subject, pre, eyebrow, rows, top=CREAM):
 <style>
 body{{margin:0;padding:0;background:{SAND};}}
 a{{color:{TERRA};}}
-@media (max-width:599px){{.w{{width:100%!important}}.px{{padding-left:24px!important;padding-right:24px!important}}.h1{{font-size:34px!important;line-height:39px!important}}.h2{{font-size:26px!important;line-height:31px!important}}.big{{font-size:64px!important;line-height:66px!important}}.col{{display:block!important;width:100%!important;box-sizing:border-box!important;padding-left:0!important;padding-right:0!important}}.colpad{{padding-bottom:18px!important}}.tk{{border-left:0!important;border-top:2px dashed {TERRA}!important}}.tk:first-child{{border-top:0!important}}}}
+@media (max-width:599px){{.w{{width:100%!important}}.px{{padding-left:24px!important;padding-right:24px!important}}.h1{{font-size:34px!important;line-height:39px!important}}.h2{{font-size:26px!important;line-height:31px!important}}.big{{font-size:64px!important;line-height:66px!important}}.col{{display:block!important;width:100%!important;box-sizing:border-box!important;padding-left:0!important;padding-right:0!important}}.colpad{{padding-bottom:18px!important}}.tk{{border-left:0!important;border-top:2px dashed {TERRA}!important}}.tk:first-child{{border-top:0!important}}.col img{{width:100%!important;max-width:100%!important}}.keep img{{width:100%!important;max-width:100%!important}}.keep{{padding-left:3px!important;padding-right:3px!important}}}}
 </style>
 </head>
 <body style="margin:0;padding:0;background:{SAND};">
@@ -118,7 +119,7 @@ EM['spotlight'] = dict(group='templates', kicker='Template · Product spotlight'
   full(img(IMG + 'petnat-tall.jpg', 'A glass and a bottle of Pet Nat outside at dusk', 600, F)),
   block(CREAM, '<div style="text-align:center;">' + kick('This week&#x27;s pick'.replace('&#x27;', "'")) + head('Refreshing. Fruity.<br>Delicious.', WINE, 46, 50, True, 18, 'center')
         + para("A gorgeous little Queensland beauty, and a best seller for a reason. It's here until it's not, so come and grab one while you can.", align='center') + '</div>' + SP(8) + btn('Grab a bottle', F, TERRA, CREAM, 'center'), '40px 56px 44px 56px'),
-  block(SAND, cols([(33, img(IMG + 'glass-sq.jpg', 'A glass of white held up in the sun', 176, None, 'border-radius:8px;')), (34, img(IMG + 'petnat-sq.jpg', 'The Pet Nat at dusk', 176, None, 'border-radius:8px;')), (33, img(IMG + 'cheers-sq.jpg', 'Two glasses clinking against the sky', 176, None, 'border-radius:8px;'))], 10), '24px 32px'),
+  block(SAND, cols([(33, img(IMG + 'glass-sq.jpg', 'A glass of white held up in the sun', 176, None, 'border-radius:8px;')), (34, img(IMG + 'petnat-sq.jpg', 'The Pet Nat at dusk', 176, None, 'border-radius:8px;')), (33, img(IMG + 'cheers-sq.jpg', 'Two glasses clinking against the sky', 176, None, 'border-radius:8px;'))], 10, False), '24px 32px'),
   block(WINE, f'<p style="margin:0 0 12px 0;font-family:{SERIF};font-size:56px;line-height:30px;color:{TERRA};text-align:center;">&ldquo;</p>' + head('We care about community and where the wine has come from.', CREAM, 26, 34, True, 12, 'center', 'h2') + f'<p style="margin:0;font-family:{SANS};font-size:11px;letter-spacing:3px;text-transform:uppercase;color:{SAND};text-align:center;">Minimal intervention, independent winemakers</p>', '40px 56px'),
   signoff('See you at the shelf.')]))
 
@@ -127,7 +128,7 @@ EM['whatson'] = dict(group='templates', kicker='Template · What&#x27;s on'.repl
  blurb='The weekly or fortnightly round-up: every regular night in one place, one bottle and one thing to take home. Same blocks every time.',
  subject='This week at Ruby&#x27;s', pre='Milk Bar Thursday, meet the maker Friday, and Sunday sun.',
  html=shell("This week at Ruby's", 'Milk Bar Thursday, meet the maker Friday, and Sunday sun.', 'Ruby&#x27;s Weekly', [
-  full(cols([(50, img(IMG + 'cheers-sq.jpg', 'Two glasses clinking against the sky', 300)), (50, img(IMG + 'tee-back.jpg', 'A Ruby&#x27;s T-shirt at the bar', 300))], 0)),
+  full(cols([(50, img(IMG + 'cheers-sq.jpg', 'Two glasses clinking against the sky', 300)), (50, img(IMG + 'tee-sq.jpg', 'A Ruby&#x27;s T-shirt at the bar', 300))], 0, False)),
   block(TERRA, kick('This week', WINE) + head('Here&#x27;s what&#x27;s on.', CREAM, 42) + para('Pop in for one glass or make a night of it. Here&#x27;s the week at a glance.'.replace('&#x27;', "'"), CREAM, mb=0), '36px 48px 38px 48px'),
   block(CREAM, table([
     listrow(IMG + 'milkbar-sq.jpg', 'Ruby&#x27;s Milk Bar'.replace('&#x27;', "'"), 'From 12. New mums welcome, babies too. Leave the pram in the car.', 'Thursday', W),
@@ -211,7 +212,7 @@ EM['regulars'] = dict(group='square', kicker='Your Square regulars · Sent once'
   block(CREAM, kick('For our regulars') + head('You&#x27;re one of the reasons we love this place.', WINE, 36) + para('You&#x27;ve been in to see us a few times this year, so we wanted you to hear it from us first: we&#x27;re starting a Ruby&#x27;s email.\n\nIt&#x27;s short, and it&#x27;s from us. What&#x27;s pouring, what&#x27;s on, new bottles and our gift boxes. No more than one a week.'.replace('&#x27;', "'")), '36px 48px 24px 48px'),
   block(CREAM, cols([(33, img(IMG + 'milkbar-sq.jpg', 'Ruby&#x27;s Milk Bar poster', 168, W, 'border-radius:8px;') + SP(8) + f'<p style="margin:0;font-family:{SANS};font-size:13px;line-height:19px;color:{WINE};"><b>Milk Bar</b><br>Thursdays from 12</p>'),
                      (34, img(IMG + 'maker-sq.jpg', 'A winemaker at work', 168, W, 'border-radius:8px;') + SP(8) + f'<p style="margin:0;font-family:{SANS};font-size:13px;line-height:19px;color:{WINE};"><b>Meet the maker</b><br>Free tastings</p>'),
-                     (33, img(IMG + 'giftboxes-sq.jpg', 'Ruby&#x27;s gift boxes', 168, G, 'border-radius:8px;') + SP(8) + f'<p style="margin:0;font-family:{SANS};font-size:13px;line-height:19px;color:{WINE};"><b>Gift boxes</b><br>Custom orders close 6 Dec</p>')], 12), '0 48px 34px 48px'),
+                     (33, img(IMG + 'giftboxes-sq.jpg', 'Ruby&#x27;s gift boxes', 168, G, 'border-radius:8px;') + SP(8) + f'<p style="margin:0;font-family:{SANS};font-size:13px;line-height:19px;color:{WINE};"><b>Gift boxes</b><br>Custom orders close 6 Dec</p>')], 12, False), '0 48px 34px 48px'),
   block(WINE, cols([(30, img(IMG + 'finalist-sq.jpg', '2026 Awards finalist', 150, None, 'border-radius:8px;')), (70, kick('Thank you', SAND) + head('We made the finals.', CREAM, 28, 34, False, 8, 'left', 'h2') + para('Ruby&#x27;s is a 2026 Awards finalist, and that&#x27;s down to regulars like you.'.replace('&#x27;', "'"), CREAM, 15.5, 24, 0))], 20), '32px 48px'),
   block(SAND, head('Not for you? No worries.', WINE, 26, 32, False, 10, 'left', 'h2') + para('Tap unsubscribe at the bottom of this email and you won&#x27;t hear from us again. No hard feelings, and we&#x27;ll still save you a seat.'.replace('&#x27;', "'"), size=15.5, lh=25, mb=0), '32px 48px'),
   signoff('See you at the bar.', 'Tamara and the Ruby&#x27;s crew (and Ruby)')]))
